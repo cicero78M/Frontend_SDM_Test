@@ -42,8 +42,8 @@ scope user, meliputi:
 - total/status personel;
 - distribusi golongan/pangkat dari master personel;
 - jenjang pendidikan;
-- personel pernah diklat dan yang belum;
-- personel dengan riwayat mutasi dan yang belum;
+- personel pernah diklat, yang belum, dan personel dengan lebih dari satu riwayat diklat;
+- personel dengan riwayat mutasi, yang belum, dan personel dengan lebih dari satu riwayat mutasi;
 - lama dinas (`<5`, `5–9`, `10–19`, `20+` tahun);
 - kelompok jabatan/nivelering berdasarkan histori jabatan aktif;
 - kelompok usia yang tidak tumpang tindih: `18–25`, `26–35`, `36–45`, `46–58`
