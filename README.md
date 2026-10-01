@@ -44,6 +44,9 @@ scope user, meliputi:
 - personel pernah diklat dan yang belum;
 - personel dengan riwayat mutasi dan yang belum;
 - lama dinas (`<5`, `5–9`, `10–19`, `20+` tahun);
+- kelompok jabatan/nivelering berdasarkan histori jabatan aktif;
+- kelompok usia yang tidak tumpang tindih: `18–25`, `26–35`, `36–45`, `46–58`
+  tahun, serta kategori di luar rentang bila ada;
 - proyeksi pensiun: sudah melewati batas, mendekati pensiun dalam 5 tahun,
   dan lebih dari 5 tahun.
 
