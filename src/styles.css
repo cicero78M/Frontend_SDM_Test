@@ -35,3 +35,14 @@ body{line-height:1.5}aside{width:276px;padding:30px 20px;background:#0b2638}nav{
 @media(max-width:900px){.dashboard-page .stats{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}.pension-card{grid-column:auto}}@media(max-width:600px){.dashboard-page .stats,.pension-metrics{grid-template-columns:1fr}.qualification-head,.section-label{align-items:flex-start;flex-direction:column}.qualification-actions{width:100%}.qualification-actions button{flex:1}}
 /* Kategori tambahan dashboard: personel dengan lebih dari satu riwayat. */
 .legend i.multiple-dot{background:#7b61a8}
+/* Urutan dashboard: ringkasan, demografi, karier, kualifikasi, lalu kesiapan data. */
+.dashboard-page>.dashboard-grid:not(.dashboard-grid-bottom)>:nth-child(1){order:1}
+.dashboard-page>.dashboard-grid:not(.dashboard-grid-bottom)>:nth-child(6){order:2}
+.dashboard-page>.dashboard-grid:not(.dashboard-grid-bottom)>:nth-child(2){order:3}
+.dashboard-page>.dashboard-grid:not(.dashboard-grid-bottom)>:nth-child(3){order:4}
+.dashboard-page>.dashboard-grid:not(.dashboard-grid-bottom)>:nth-child(4){order:5}
+.dashboard-page>.dashboard-grid:not(.dashboard-grid-bottom)>:nth-child(5){order:6}
+.dashboard-page>.dashboard-grid:not(.dashboard-grid-bottom)>:nth-child(7){order:7}
+.dashboard-page>.dashboard-grid:not(.dashboard-grid-bottom)>:nth-child(10){order:8}
+.dashboard-page>.dashboard-grid:not(.dashboard-grid-bottom)>:nth-child(8){order:9}
+.dashboard-page>.dashboard-grid:not(.dashboard-grid-bottom)>:nth-child(9){order:10}
