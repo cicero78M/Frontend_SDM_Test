@@ -40,6 +40,7 @@ Halaman awal setelah login. Agregasi diambil dari backend dan dibatasi sesuai
 scope user, meliputi:
 
 - total/status personel;
+- distribusi golongan/pangkat dari master personel;
 - jenjang pendidikan;
 - personel pernah diklat dan yang belum;
 - personel dengan riwayat mutasi dan yang belum;
