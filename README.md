@@ -16,15 +16,13 @@ npm install
 npm run dev
 ```
 
-Atur `VITE_API_BASE_URL` sesuai alamat backend. Frontend saat ini menyediakan login, dashboard daftar personel berbasis scope, pencarian, form tambah/edit personel POLRI/ASN, profil dan timeline riwayat jabatan, pemilih pangkat POLRI, serta menu admin Scope Organisasi. API tetap menjadi sumber keputusan permission; menu frontend hanya membantu pengalaman pengguna.
+Atur `VITE_API_BASE_URL` sesuai alamat backend. Frontend saat ini menyediakan login, dashboard daftar personel berbasis scope, pencarian, form tambah/edit personel POLRI/ASN, profil dan timeline riwayat jabatan, pemilih pangkat POLRI, serta Administrasi Akses untuk admin pertama. API tetap menjadi sumber keputusan permission; menu frontend hanya membantu pengalaman pengguna.
 
 Build production:
 
 ```bash
 npm run build
 ```
-
-Menu administrasi user/approval dan uji end-to-end tiga persona masih dalam tahap penyelesaian roadmap.
 
 ## Struktur
 
@@ -72,7 +70,9 @@ Profil memakai satu drawer dengan tiga tab agar workflow tidak bertumpuk:
 
 ### Administrasi dan navigasi
 
-- Scope Organisasi untuk Admin SSDM/Admin.
+- Administrasi Akses untuk admin pertama, terdiri dari Data User, Riwayat Persetujuan, Permintaan Akses, dan Scope Organisasi.
+- Halaman Permintaan Akses menampilkan registrasi pending dan menyediakan aksi Setujui/Tolak serta penetapan role.
+- Approval registrasi hanya dapat diproses oleh role `admin` pertama; Admin SSDM tetap mengelola scope dan user aktif sesuai kewenangannya.
 - Login, registrasi, lupa/reset password, dan ganti password.
 - Sidebar desktop permanen; sidebar mobile memiliki tombol buka, tombol tutup,
   overlay, dan auto-close setelah menu dipilih.
