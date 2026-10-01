@@ -50,6 +50,10 @@ scope user, meliputi:
 - proyeksi pensiun: sudah melewati batas, mendekati pensiun dalam 5 tahun,
   dan lebih dari 5 tahun.
 
+Urutan dashboard disusun dari ringkasan umum menuju detail: ringkasan utama,
+demografi, pangkat/jabatan, pendidikan dan masa dinas, proyeksi pensiun,
+diklat/mutasi, lalu kualitas dan kesiapan data.
+
 ### Data Personel
 
 Daftar personel mendukung pagination, pencarian, tambah/update, pemilihan
@@ -85,6 +89,9 @@ Profil memakai satu drawer dengan tiga tab agar workflow tidak bertumpuk:
 - CRUD `/api/v1/personel/:id/pendidikan`
 - CRUD `/api/v1/personel/:id/diklat`
 - `GET /api/v1/dashboard/overview`
+- `GET/PATCH /api/v1/auth/registrations/pending` dan `/api/v1/auth/registrations/:id`
+- `GET /api/v1/auth/registrations/history`
+- `GET /api/v1/auth/users/approved`
 - master Satker, unit kerja, jabatan, fungsi, level, dan status jabatan
 
 Build production:
