@@ -40,7 +40,7 @@ Halaman awal setelah login. Agregasi diambil dari backend dan dibatasi sesuai
 scope user, meliputi:
 
 - total/status personel;
-- distribusi golongan/pangkat dari master personel;
+- distribusi golongan/pangkat dari master personel, dipisahkan menjadi chart POLRI dan chart ASN;
 - jenjang pendidikan;
 - personel pernah diklat, yang belum, dan personel dengan lebih dari satu riwayat diklat;
 - personel dengan riwayat mutasi, yang belum, dan personel dengan lebih dari satu riwayat mutasi;
