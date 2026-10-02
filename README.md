@@ -26,7 +26,13 @@ npm run build
 
 ## Struktur
 
-- `src/main.jsx` — API client, login, dashboard, tabel, dan form personel.
+- `src/main.jsx` — entry point aplikasi dan orkestrasi halaman utama.
+- `src/api.js` — API client, utilitas hierarki Satker/unit, dan format tanggal.
+- `src/components/auth/` — login, registrasi, reset/ganti password, dan alur sesi.
+- `src/components/app-shell/` — layout, sidebar, daftar personel, dan responsive shell.
+- `src/components/personnel/` — form personel, profil karier, riwayat jabatan, pendidikan/diklat, dan picker organisasi.
+- `src/components/administration/` — user, approval, permission, scope, dan password administration.
+- `src/components/dashboard/` — ringkasan dan visualisasi analitik.
 - `src/styles.css` — layout dashboard, visualisasi, drawer, form, dan responsive UI.
 - `.env.example` — alamat REST API publik/non-secret.
 
