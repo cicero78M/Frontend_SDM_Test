@@ -1,6 +1,34 @@
-// Daftar user aktif dan pengelolaan role aksesnya.
-import React, { useEffect, useState } from 'react';
-import { request } from '../../api';
+// Orkestrasi daftar user aktif, pagination, dan perubahan role.
+import { useState } from 'react';
 import { PagePagination } from './PagePagination';
+import { ApprovedUsersTable } from './ApprovedUsersTable';
+import { RolePromotionModal } from './RolePromotionModal';
+import { useApprovedUsers } from './useApprovedUsers';
 
-export function ApprovedUsersPage() { const [users, setUsers] = useState([]); const [meta, setMeta] = useState({ page: 1, limit: 10, total: 0 }); const [selected, setSelected] = useState(null); const [role, setRole] = useState('viewer'); const [message, setMessage] = useState(''); const [error, setError] = useState(''); async function load(page = meta.page, limit = meta.limit) { try { const result = await request(`/auth/users/approved?page=${page}&limit=${limit}`); setUsers(result.data || []); setMeta(result.meta || { page, limit, total: 0 }); } catch (err) { setError(err.message); } } useEffect(() => { load(1, 10); }, []); async function saveRole(e) { e.preventDefault(); try { await request(`/auth/users/${selected.id_user}/role`, { method: 'PATCH', body: JSON.stringify({ role }) }); setSelected(null); setMessage('Role user berhasil diperbarui.'); load(meta.page, meta.limit); } catch (err) { setError(err.message); } } return <section className="page-section"><div className="page-heading"><div><span className="eyebrow">ADMINISTRASI</span><h1>User Disetujui</h1><p className="muted">Daftar user aktif yang telah melewati proses persetujuan.</p></div></div>{message && <div className="hint">{message}</div>}{error && <div className="alert">{error}</div>}<div className="panel"><div className="table-wrap"><table><thead><tr><th>Username</th><th>Role</th><th>Status</th><th>Dibuat</th><th>Aksi</th></tr></thead><tbody>{users.map(item => <tr key={item.id_user}><td><strong>{item.username}</strong></td><td><span className="badge">{item.role}</span></td><td>Aktif</td><td>{new Date(item.created_at).toLocaleDateString('id-ID')}</td><td><button className="table-action" onClick={() => { setSelected(item); setRole(item.role); }}>Promote role</button></td></tr>)}{!users.length && <tr><td colSpan="5" className="empty">Belum ada user disetujui.</td></tr>}</tbody></table></div><PagePagination meta={meta} onChange={load} /></div>{selected && <div className="drawer-backdrop"><section className="drawer compact-modal"><div className="drawer-head"><div><span className="eyebrow">AKSES USER</span><h2>Promote role</h2></div><button className="icon-btn" onClick={() => setSelected(null)}>×</button></div><p className="muted">Ubah role untuk <strong>{selected.username}</strong>.</p><form onSubmit={saveRole} className="form-grid"><label className="full">Role baru<select value={role} onChange={e => setRole(e.target.value)}><option value="viewer">Viewer</option><option value="editor">Editor</option><option value="operator_satker">Operator Satker</option><option value="operator_polda">Operator Polda</option><option value="admin_ssdm">Admin SSDM</option><option value="admin">Admin</option></select></label><div className="actions full"><button type="button" onClick={() => setSelected(null)}>Batal</button><button className="primary">Simpan role</button></div></form></section></div>}</section>; }
+export function ApprovedUsersPage() {
+  const { users, meta, error, load, setError } = useApprovedUsers();
+  const [selected, setSelected] = useState(null);
+  const [message, setMessage] = useState('');
+
+  function openPromotion(user) {
+    setMessage('');
+    setSelected(user);
+  }
+
+  function closePromotion() {
+    setSelected(null);
+  }
+
+  function handleSaved() {
+    closePromotion();
+    setMessage('Role user berhasil diperbarui.');
+    load(meta.page, meta.limit);
+  }
+
+  return <section className="page-section"><div className="page-heading"><div><span className="eyebrow">ADMINISTRASI</span><h1>User Disetujui</h1><p className="muted">Daftar user aktif yang telah melewati proses persetujuan.</p></div></div>
+    {message && <div className="hint">{message}</div>}
+    {error && <div className="alert">{error}</div>}
+    <div className="panel"><ApprovedUsersTable users={users} onPromote={openPromotion} /><PagePagination meta={meta} onChange={load} /></div>
+    {selected && <RolePromotionModal user={selected} onClose={closePromotion} onSaved={handleSaved} onError={setError} />}
+  </section>;
+}
