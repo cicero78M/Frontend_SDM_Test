@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { request } from '../api';
+import { request } from '../../api';
 
 // Halaman autentikasi menangani empat alur: masuk, registrasi, lupa password,
 // dan reset password menggunakan token dari backend.

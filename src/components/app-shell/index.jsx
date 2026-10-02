@@ -1,10 +1,10 @@
 // Shell aplikasi: navigasi utama, pengelolaan sesi, dan penggabungan seluruh halaman.
 import React, { useEffect, useState } from 'react';
-import { Login } from './Auth';
-import { request } from '../api';
-import { PersonnelDashboardPage } from './Dashboard';
-import { PagePagination, PasswordPanel, ScopeManagementPage } from './Administration';
-import { CareerProfilePanel, PersonPanel } from './Personnel';
+import { Login } from '../auth';
+import { request } from '../../api';
+import { PersonnelDashboardPage } from '../dashboard';
+import { PagePagination, PasswordPanel, ScopeManagementPage } from '../administration';
+import { CareerProfilePanel, PersonPanel } from '../personnel';
 
 function AppResponsive() {
   const [user, setUser] = useState(null); const [page, setPage] = useState('dashboard'); const [people, setPeople] = useState([]); const [meta, setMeta] = useState({ page: 1, limit: 10, total: 0 }); const [search, setSearch] = useState(''); const [profile, setProfile] = useState(null); const [editor, setEditor] = useState(null); const [passwordPanel, setPasswordPanel] = useState(false); const [sidebarOpen, setSidebarOpen] = useState(false); const canEdit = user && ['admin', 'admin_ssdm', 'editor', 'operator_polda', 'operator_satker'].includes(user.role);

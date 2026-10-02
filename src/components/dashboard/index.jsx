@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { request } from '../api';
+import { request } from '../../api';
 
 // Grafik batang generik yang dipakai oleh seluruh kelompok analitik.
 export function DashboardBars({ title, items, empty = 'Belum ada data.' }) {
