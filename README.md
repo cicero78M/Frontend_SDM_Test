@@ -34,7 +34,9 @@ npm run build
 - `src/components/administration/` — user, approval, permission, scope, dan password administration.
 - `src/components/dashboard/` — ringkasan dan visualisasi analitik.
 - `src/styles/index.css` — entrypoint stylesheet aplikasi.
-- `src/styles/base.css` — baseline layout, visualisasi, drawer, form, dan responsive UI; pemecahan fitur dilakukan bertahap agar cascade tetap stabil.
+- `src/styles/base.css` — entrypoint fondasi stylesheet.
+- `src/styles/fonts.css` — import font aplikasi.
+- `src/styles/core.css` — baseline layout, visualisasi, drawer, form, dan responsive UI; pemecahan fitur dilakukan bertahap agar cascade tetap stabil.
 - `.env.example` — alamat REST API publik/non-secret.
 
 ## Halaman dan fitur terbaru
