@@ -3,6 +3,7 @@ export const APPROVAL_ROLES = [
   ['viewer', 'Viewer'],
   ['editor', 'Editor'],
   ['operator_satker', 'Operator Satker'],
+  ['operator_polres', 'Operator Polres'],
   ['operator_polda', 'Operator Polda'],
   ['admin_ssdm', 'Admin SSDM'],
   ['admin', 'Admin'],

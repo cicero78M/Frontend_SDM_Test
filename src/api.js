@@ -25,7 +25,12 @@ export function hierarchicalSatkerOptions(items) {
         visit(item.id_satker, depth + 1);
       });
   };
-  items.filter(item => !item.id_satker_induk).forEach(root => visit(root.id_satker, 0));
+  items.filter(item => !item.id_satker_induk)
+    .sort((a, b) => String(a.nama_satker).localeCompare(String(b.nama_satker)))
+    .forEach(root => {
+      result.push({ ...root, label: `${root.nama_satker} (${root.tipe_satker})` });
+      visit(root.id_satker, 1);
+    });
   return result;
 }
 

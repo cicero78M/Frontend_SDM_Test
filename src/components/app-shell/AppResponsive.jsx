@@ -15,8 +15,8 @@ export function AppResponsive() {
   const [editor, setEditor] = useState(null);
   const [passwordPanel, setPasswordPanel] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { people, meta, search, setSearch, load } = usePersonnelList(user, page);
-  const canEdit = user && ['admin', 'admin_ssdm', 'editor', 'operator_polda', 'operator_satker'].includes(user.role);
+  const { people, meta, search, setSearch, load, filters, updateFilter, applyFilters, resetFilters } = usePersonnelList(user, page);
+  const canEdit = user && ['admin', 'admin_ssdm', 'editor', 'operator_polda', 'operator_satker', 'operator_polres'].includes(user.role);
 
   if (!user) return <Login onLogin={setUser} />;
 
@@ -26,9 +26,9 @@ export function AppResponsive() {
   return <div className={`shell ${sidebarOpen ? 'sidebar-open' : ''}`}>
     <AppSidebar user={user} page={page} sidebarOpen={sidebarOpen} onNavigate={go} onLogout={logout} onPassword={() => { setPasswordPanel(true); setSidebarOpen(false); }} onOpen={() => setSidebarOpen(true)} onClose={() => setSidebarOpen(false)} />
     <main className="content">
-      {page === 'dashboard' ? <PersonnelDashboardPage user={user} /> : adminPage ? <ScopeManagementPage /> : <PersonnelPage user={user} canEdit={canEdit} people={people} meta={meta} search={search} onSearch={setSearch} onLoad={load} onProfile={setProfile} onEdit={setEditor} />}
+      {page === 'dashboard' ? <PersonnelDashboardPage user={user} /> : adminPage ? <ScopeManagementPage /> : <PersonnelPage user={user} canEdit={canEdit} people={people} meta={meta} search={search} onSearch={setSearch} onLoad={load} filters={filters} onFilterChange={updateFilter} onApplyFilters={applyFilters} onResetFilters={resetFilters} onProfile={setProfile} onEdit={setEditor} />}
       {passwordPanel && <PasswordPanel onClose={() => setPasswordPanel(false)} />}
-      {profile && <CareerProfilePanel person={profile} canEdit={canEdit} onClose={() => setProfile(null)} />}
+      {profile && <CareerProfilePanel person={profile} userRole={user?.role} canEdit={canEdit} onClose={() => setProfile(null)} />}
       {editor && <PersonPanel person={editor} onClose={() => setEditor(null)} onSaved={() => { setEditor(null); load(meta.page); }} />}
     </main>
   </div>;

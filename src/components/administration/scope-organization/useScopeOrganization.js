@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { request } from '../../../api';
+import { hierarchicalSatkerOptions, request } from '../../../api';
 
 export function useScopeOrganization() {
   const [users, setUsers] = useState([]);
@@ -11,10 +11,10 @@ export function useScopeOrganization() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    Promise.all(['/auth/users/approved?page=1&limit=100', '/master/satker/tree'].map(path => request(path)))
+    Promise.all(['/auth/users/approved?page=1&limit=100', '/master/satker/tree?scoped=true'].map(path => request(path)))
       .then(([usersResult, satkerResult]) => {
         setUsers(usersResult.data || []);
-        setSatkers(satkerResult.data || []);
+        setSatkers(hierarchicalSatkerOptions(satkerResult.data || []));
       })
       .catch(err => setError(err.message));
   }, []);
@@ -29,10 +29,6 @@ export function useScopeOrganization() {
     } catch (err) {
       setError(err.message);
     }
-  }
-
-  function toggle(id) {
-    setScope(current => current.includes(id) ? current.filter(value => value !== id) : [...current, id]);
   }
 
   async function save() {
@@ -50,5 +46,5 @@ export function useScopeOrganization() {
     }
   }
 
-  return { users, satkers, selected, scope, message, error, saving, choose, toggle, save };
+  return { users, satkers, selected, scope, message, error, saving, choose, setScope, save };
 }

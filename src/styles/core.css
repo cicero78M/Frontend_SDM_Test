@@ -241,6 +241,79 @@ td small {
   gap: 17px;
   margin-top: 30px;
 }
+.registration-form .satker-picker {
+  display: contents;
+}
+.registration-form .satker-picker-simple {
+  display: contents;
+}
+.registration-form .satker-picker-simple > label {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.registration-form .satker-picker-simple > label::before {
+  display: none;
+}
+.picker-flat,
+.picker-flat-unit {
+  min-width: 0;
+}
+.picker-flat {
+  display: contents;
+}
+.picker-flat .satker-picker-title,
+.picker-flat .satker-picker-note {
+  display: none !important;
+}
+.picker-flat > label {
+  min-width: 0;
+}
+.picker-flat > label::before {
+  display: none !important;
+}
+.picker-flat-unit {
+  grid-column: auto;
+}
+.picker-flat select,
+.picker-flat-unit select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.form-grid .picker-flat > label,
+.form-grid .picker-flat-unit {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+.registration-form label {
+  min-width: 0;
+}
+.registration-form input,
+.registration-form select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+@media (max-width: 500px) {
+  .login-card {
+    width: calc(100vw - 24px);
+    padding: 24px;
+  }
+  .registration-form {
+    width: 100%;
+    min-width: 0;
+  }
+  .registration-form .satker-picker,
+  .registration-form .satker-picker-simple {
+    display: contents;
+  }
+}
 label {
   display: grid;
   gap: 7px;
@@ -688,6 +761,160 @@ select {
   background: #0f405b;
   color: #fff;
 }
+.approval-toolbar {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5eaed;
+}
+.approval-toolbar p {
+  margin: 5px 0 0;
+}
+.approval-scope-search {
+  width: min(360px, 100%);
+}
+.scope-grant-note {
+  display: block;
+  margin-top: 5px;
+  color: #0f6b59;
+  font-size: 11px;
+  font-weight: 600;
+}
+.approval-cards {
+  display: none;
+}
+.approval-user-card {
+  border: 1px solid #e1e8eb;
+  border-radius: 14px;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 4px 14px #1d40550b;
+}
+.approval-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.approval-card-avatar {
+  display: grid;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 12px;
+  background: #e9f1f4;
+  color: #0f405b;
+  font: 700 18px "Space Grotesk";
+}
+.approval-card-identity {
+  min-width: 0;
+  flex: 1;
+}
+.approval-card-identity h2 {
+  overflow: hidden;
+  margin: 0;
+  color: #17212b;
+  font: 600 15px "Space Grotesk";
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.approval-card-identity p {
+  overflow: hidden;
+  margin: 4px 0 0;
+  color: #74808a;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.approval-card-head .badge {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  color: #805c16;
+  background: #fff4d8;
+  font-size: 10px;
+}
+.approval-card-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+  padding: 13px 0;
+  border-top: 1px solid #edf0f2;
+  border-bottom: 1px solid #edf0f2;
+}
+.approval-card-details div {
+  min-width: 0;
+}
+.approval-card-detail-wide {
+  grid-column: 1 / -1;
+}
+.approval-card-details dt {
+  margin-bottom: 5px;
+  color: #89959d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.approval-card-details dd {
+  overflow: hidden;
+  margin: 0;
+  color: #344650;
+  font-size: 12px;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.approval-card-controls {
+  display: grid;
+  gap: 12px;
+}
+.approval-card-controls label {
+  display: grid;
+  gap: 6px;
+  color: #52636e;
+  font-size: 11px;
+  font-weight: 700;
+}
+.approval-card-controls select {
+  width: 100%;
+  background: #fff;
+}
+.approval-card-controls select[multiple] {
+  min-height: 96px;
+}
+.approval-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+.approval-card-actions button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 8px;
+  background: #f1f3f4;
+  color: #31566a;
+  cursor: pointer;
+  font-weight: 600;
+}
+.approval-card-actions .primary {
+  color: #fff;
+  background: #b88930;
+}
+.approval-card-actions button:disabled,
+.actions-cell button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+.approval-empty-card {
+  padding: 20px 12px;
+  border: 1px dashed #d5dfe3;
+  border-radius: 10px;
+}
 @media (max-width: 600px) {
   .drawer-backdrop {
     padding: 10px;
@@ -713,6 +940,23 @@ select {
   }
   .actions button {
     flex: 1;
+  }
+  .approval-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .approval-scope-search {
+    width: 100%;
+  }
+}
+@media (max-width: 700px) {
+  .approval-table-wrap {
+    display: none;
+  }
+  .approval-cards {
+    display: grid;
+    gap: 12px;
   }
 }
 .scope-layout {
@@ -1435,6 +1679,134 @@ nav a:hover {
   box-shadow: 0 0 0 3px #a8d1dc55;
   outline: 0;
 }
+
+/* Person form: keep the hierarchy picker as independent form fields.
+   The generic .satker-picker rules above must not recreate one enclosing card. */
+.form-grid > .satker-picker.picker-flat {
+  display: contents;
+  grid-column: auto;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.form-grid > .satker-picker.picker-flat > label {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.form-grid > .satker-picker.picker-flat > label::before {
+  display: none !important;
+}
+.form-grid > .satker-picker.picker-flat select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Person input/update form: keep every field at the same flat level as Unit Kerja.
+   The generic form-grid labels are cards for other workflows, but must not frame
+   the personnel fields from Jenis Personil through Batas Pensiun. */
+.form-grid.person-form-flat > label,
+.form-grid.person-form-flat > .picker-flat-unit {
+  min-width: 0;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.form-grid.person-form-flat > label::before,
+.form-grid.person-form-flat > .picker-flat-unit::before {
+  display: none !important;
+  content: none !important;
+}
+.form-grid.person-form-flat > label input,
+.form-grid.person-form-flat > label select,
+.form-grid.person-form-flat > .picker-flat-unit select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.form-grid.person-form-flat .personnel-unit-picker {
+  display: contents;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.form-grid.person-form-flat .personnel-unit-picker .unit-hierarchy-head {
+  display: none;
+}
+.form-grid.person-form-flat .personnel-unit-picker > label {
+  min-width: 0;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.form-grid.person-form-flat .personnel-unit-picker .unit-level-label b {
+  display: none;
+}
+.form-grid.person-form-flat .personnel-unit-picker select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.career-history-form > .satker-picker {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px;
+  min-width: 0;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.career-history-form > .satker-picker .satker-picker-title,
+.career-history-form > .satker-picker .satker-picker-note {
+  display: none;
+}
+.career-history-form > .satker-picker > label {
+  min-width: 0;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.career-history-form > .satker-picker select,
+.career-history-form > label input,
+.career-history-form > label select,
+.career-history-form > label textarea {
+  width: 100%;
+  min-width: 0;
+}
+.form-section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e5eaed;
+  color: #31566a;
+  font: 600 13px "Space Grotesk";
+}
+.form-section-title small {
+  color: #7a8790;
+  font: 400 11px inherit;
+}
+@media (max-width: 700px) {
+  .career-history-form > .satker-picker { grid-template-columns: 1fr; gap: 16px; }
+  .form-section-title { align-items: flex-start; flex-direction: column; gap: 3px; }
+}
 @media (max-width: 700px) {
   .unit-hierarchy-head {
     align-items: flex-start;
@@ -1690,4 +2062,326 @@ nav a:hover {
 }
 .dashboard-page > .dashboard-grid:not(.dashboard-grid-bottom) > :nth-child(9) {
   order: 10;
+}
+
+/* Data personel: desktop tetap padat, mobile memakai kartu yang mudah dipindai. */
+.personnel-heading {
+  margin-bottom: 28px;
+}
+.personnel-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.personnel-add span {
+  font-size: 18px;
+  line-height: 1;
+}
+.personnel-panel {
+  padding: 26px;
+}
+.personnel-panel-head {
+  align-items: flex-end;
+  padding-bottom: 20px;
+  margin-bottom: 0;
+  border-bottom: 1px solid #edf0f2;
+}
+.personnel-panel-head .eyebrow {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 10px;
+}
+.personnel-panel-head h2 {
+  margin-bottom: 6px;
+}
+.personnel-filters {
+  margin: 20px 0 5px;
+  padding: 16px;
+  border: 1px solid #e5eaed;
+  border-radius: 10px;
+  background: #f8fafb;
+}
+.personnel-filters-title,
+.personnel-filter-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.personnel-filters-title strong,
+.personnel-filters-title span {
+  display: block;
+}
+.personnel-filters-title strong {
+  color: #244352;
+  font-size: 13px;
+}
+.personnel-filters-title span,
+.personnel-filter-actions span {
+  margin-top: 3px;
+  color: #7b8991;
+  font-size: 11px;
+  font-weight: 400;
+}
+.filter-reset {
+  padding: 5px 0;
+  border: 0;
+  background: transparent;
+  color: #8a6425;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+.personnel-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 15px 0;
+}
+.personnel-filter-grid label,
+.personnel-filter-grid fieldset {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #52636e;
+  font-size: 11px;
+}
+.personnel-filter-grid select,
+.personnel-filter-grid input {
+  width: 100%;
+  min-width: 0;
+  margin-top: 6px;
+  padding: 9px 10px;
+  border-color: #d9e1e5;
+  border-radius: 7px;
+  background: #fff;
+  font-size: 12px;
+}
+.personnel-filter-grid legend {
+  padding: 0;
+  color: #52636e;
+  font-size: 11px;
+  font-weight: 600;
+}
+.filter-range {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.filter-range span {
+  color: #9ba6ac;
+  font-size: 12px;
+}
+.personnel-filter-actions {
+  justify-content: flex-end;
+  padding-top: 13px;
+  border-top: 1px solid #e5eaed;
+}
+.personnel-filter-actions .primary {
+  padding: 9px 14px;
+  font-size: 12px;
+}
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: min(330px, 100%);
+  padding: 0 12px;
+  border: 1px solid #dce2e6;
+  border-radius: 8px;
+  background: #fff;
+  color: #82909a;
+  font-size: 18px;
+  font-weight: 400;
+}
+.search-field:focus-within {
+  border-color: #b88930;
+  box-shadow: 0 0 0 3px #b8893022;
+}
+.search-field .search {
+  width: 100%;
+  padding: 11px 0;
+  border: 0;
+  outline: 0;
+}
+.personnel-table-wrap {
+  margin-top: 4px;
+}
+.personnel-table-wrap tbody tr {
+  transition: background 0.15s ease;
+}
+.personnel-table-wrap tbody tr:hover {
+  background: #f8fafb;
+}
+.personnel-table-wrap td:first-child {
+  min-width: 190px;
+}
+.personnel-table-wrap td:nth-child(3) {
+  max-width: 280px;
+  line-height: 1.4;
+}
+.personnel-cards {
+  display: none;
+}
+.personnel-card {
+  border: 1px solid #e1e8eb;
+  border-radius: 12px;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 4px 14px #1d40550b;
+}
+.personnel-card-top {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.personnel-avatar {
+  display: grid;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 11px;
+  background: #e9f1f4;
+  color: #0f405b;
+  font: 700 17px "Space Grotesk";
+}
+.personnel-card-identity {
+  min-width: 0;
+  flex: 1;
+}
+.personnel-card-identity h3 {
+  overflow: hidden;
+  margin: 0;
+  color: #17212b;
+  font: 600 15px "Space Grotesk";
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.personnel-card-identity p {
+  overflow: hidden;
+  margin: 4px 0 0;
+  color: #74808a;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.personnel-card-top .badge {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  font-size: 10px;
+}
+.personnel-card-details {
+  display: grid;
+  grid-template-columns: minmax(100px, 0.75fr) minmax(0, 1.25fr);
+  gap: 12px;
+  margin: 16px 0;
+  padding: 13px 0;
+  border-top: 1px solid #edf0f2;
+  border-bottom: 1px solid #edf0f2;
+}
+.personnel-card-details div {
+  min-width: 0;
+}
+.personnel-card-details dt {
+  margin-bottom: 5px;
+  color: #89959d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.personnel-card-details dd {
+  overflow: hidden;
+  margin: 0;
+  color: #344650;
+  font-size: 12px;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.personnel-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.personnel-card-actions button {
+  min-height: 40px;
+  border: 0;
+  border-radius: 7px;
+  background: #f1f3f4;
+  color: #31566a;
+  cursor: pointer;
+  font-weight: 600;
+}
+.personnel-card-actions .primary {
+  color: #fff;
+  background: #b88930;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (max-width: 700px) {
+  .personnel-heading {
+    margin-bottom: 22px;
+  }
+  .personnel-heading .personnel-add {
+    width: 100%;
+    justify-content: center;
+  }
+  .personnel-stats {
+    gap: 10px;
+  }
+  .personnel-stats > div {
+    padding: 15px 17px;
+  }
+  .personnel-stats strong {
+    margin: 6px 0 2px;
+    font-size: 23px;
+  }
+  .personnel-panel {
+    padding: 15px;
+  }
+  .personnel-panel-head {
+    align-items: stretch;
+    gap: 15px;
+    padding-bottom: 15px;
+  }
+  .personnel-filters {
+    padding: 13px;
+  }
+  .personnel-filter-grid {
+    grid-template-columns: 1fr;
+    gap: 11px;
+  }
+  .personnel-filter-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .personnel-filter-actions span {
+    margin-top: 0;
+  }
+  .personnel-filter-actions .primary {
+    width: 100%;
+  }
+  .search-field {
+    width: 100%;
+  }
+  .personnel-table-wrap {
+    display: none;
+  }
+  .personnel-cards {
+    display: grid;
+    gap: 11px;
+    margin-top: 15px;
+  }
 }

@@ -3,9 +3,9 @@ import { request } from '../../api';
 import { CareerHistoryForm } from './CareerHistoryForm';
 import { EducationTrainingSection } from './EducationTrainingSection';
 
-export function CareerProfilePanel({ person, canEdit, onClose }) {
+export function CareerProfilePanel({ person, userRole, canEdit, onClose }) {
   const [profile, setProfile] = useState(null);
-  const [masters, setMasters] = useState({ satker: [], fungsi: [], level: [], status: [], jabatan: [] });
+  const [masters, setMasters] = useState({ satker: [], level: [], status: [], jabatan: [] });
   const [historyForm, setHistoryForm] = useState(null);
   const [tab, setTab] = useState('ringkasan');
   const [error, setError] = useState('');
@@ -14,9 +14,9 @@ export function CareerProfilePanel({ person, canEdit, onClose }) {
   async function load() {
     setLoading(true);
     try {
-      const [profileResult, ...masterResults] = await Promise.all(['/personel/' + person.id_pegawai + '/profile', '/master/satker', '/master/fungsi', '/master/level-jabatan', '/master/status-jabatan', '/master/jabatan'].map(path => request(path)));
+      const [profileResult, ...masterResults] = await Promise.all(['/personel/' + person.id_pegawai + '/profile', '/master/satker', '/master/level-jabatan', '/master/status-jabatan', '/master/jabatan'].map(path => request(path)));
       setProfile(profileResult.data);
-      setMasters({ satker: masterResults[0].data || [], fungsi: masterResults[1].data || [], level: masterResults[2].data || [], status: masterResults[3].data || [], jabatan: masterResults[4].data || [] });
+      setMasters({ satker: masterResults[0].data || [], level: masterResults[1].data || [], status: masterResults[2].data || [], jabatan: masterResults[3].data || [] });
     } catch (err) { setError(err.message); } finally { setLoading(false); }
   }
 
@@ -33,7 +33,7 @@ export function CareerProfilePanel({ person, canEdit, onClose }) {
 
   const date = value => value ? new Date(value).toLocaleDateString('id-ID') : 'Sekarang';
 
-  return <div className="drawer-backdrop"><section className="drawer profile-drawer"><div className="drawer-head"><div><span className="eyebrow">PROFIL PERSONEL</span><h2>{person.nama}</h2><p className="muted">{person.nip} · {person.nama_pangkat || '-'}</p></div><button className="icon-btn" onClick={onClose}>×</button></div>{error && <div className="alert">{error}</div>}{loading && <p className="muted">Memuat profil…</p>}{profile && <><ProfileSummary profile={profile} /><ProfileTabs tab={tab} setTab={setTab} profile={profile} />{tab === 'ringkasan' && <ProfileOverview profile={profile} />}{tab === 'karier' && <CareerTab profile={profile} canEdit={canEdit} date={date} onAdd={() => setHistoryForm({})} onEdit={setHistoryForm} onRemove={remove} />}{tab === 'kualifikasi' && <EducationTrainingSection personId={person.id_pegawai} profile={profile} canEdit={canEdit} onChanged={refreshProfile} />}</>}</section>{historyForm && <CareerHistoryForm personId={person.id_pegawai} record={historyForm.id_riwayat_jabatan ? historyForm : null} masters={masters} onClose={() => setHistoryForm(null)} onSaved={() => { setHistoryForm(null); refreshProfile(); }} />}</div>;
+  return <div className="drawer-backdrop"><section className="drawer profile-drawer"><div className="drawer-head"><div><span className="eyebrow">PROFIL PERSONEL</span><h2>{person.nama}</h2><p className="muted">{person.nip} · {person.nama_pangkat || '-'}</p></div><button className="icon-btn" onClick={onClose}>×</button></div>{error && <div className="alert">{error}</div>}{loading && <p className="muted">Memuat profil…</p>}{profile && <><ProfileSummary profile={profile} /><ProfileTabs tab={tab} setTab={setTab} profile={profile} />{tab === 'ringkasan' && <ProfileOverview profile={profile} />}{tab === 'karier' && <CareerTab profile={profile} canEdit={canEdit} date={date} onAdd={() => setHistoryForm({})} onEdit={setHistoryForm} onRemove={remove} />}{tab === 'kualifikasi' && <EducationTrainingSection personId={person.id_pegawai} profile={profile} canEdit={canEdit} onChanged={refreshProfile} />}</>}</section>{historyForm && <CareerHistoryForm personId={person.id_pegawai} personSatkerId={profile?.personel?.id_satker || person.id_satker} operatorPolres={['operator_satker', 'operator_polres'].includes(userRole)} record={historyForm.id_riwayat_jabatan ? historyForm : null} masters={masters} onClose={() => setHistoryForm(null)} onSaved={() => { setHistoryForm(null); refreshProfile(); }} />}</div>;
 }
 
 function ProfileSummary({ profile }) {
@@ -49,5 +49,5 @@ function ProfileOverview({ profile }) {
 }
 
 function CareerTab({ profile, canEdit, date, onAdd, onEdit, onRemove }) {
-  return <><div className="timeline-head"><div><h3>Timeline riwayat jabatan</h3><p className="muted">Urut dari awal masa penugasan.</p></div>{canEdit && <button className="primary" onClick={onAdd}>+ Tambah riwayat</button>}</div><div className="career-timeline">{!profile.riwayat_jabatan.length && <p className="empty">Belum ada riwayat jabatan.</p>}{profile.riwayat_jabatan.map(record => <article className="career-item" key={record.id_riwayat_jabatan}><div className="career-dot" /><div className="career-card"><div className="history-head"><div><strong>{record.nama_jabatan}</strong><small>{record.nama_satker || '-'} · {record.nama_fungsi || 'Fungsi belum diisi'}</small></div><span className="badge">{record.nama_status || '-'}</span></div><p className="muted">{date(record.tanggal_mulai)} — {date(record.tanggal_selesai)}{record.nama_level ? ` · ${record.nama_level}` : ''}</p>{record.keterangan && <p>{record.keterangan}</p>}{canEdit && <div className="actions"><button onClick={() => onEdit(record)}>Edit</button><button onClick={() => onRemove(record)}>Hapus</button></div>}</div></article>)}</div></>;
+  return <><div className="timeline-head"><div><h3>Timeline riwayat jabatan</h3><p className="muted">Urut dari awal masa penugasan.</p></div>{canEdit && <button className="primary" onClick={onAdd}>+ Tambah riwayat</button>}</div><div className="career-timeline">{!profile.riwayat_jabatan.length && <p className="empty">Belum ada riwayat jabatan.</p>}{profile.riwayat_jabatan.map(record => <article className="career-item" key={record.id_riwayat_jabatan}><div className="career-dot" /><div className="career-card"><div className="history-head"><div><strong>{record.nama_jabatan}</strong><small>{record.nama_satker || '-'} · {record.nama_unit || 'Unsur belum diisi'}</small></div><span className="badge">{record.nama_status || '-'}</span></div><p className="muted">{date(record.tanggal_mulai)} — {date(record.tanggal_selesai)}{record.nama_level ? ` · ${record.nama_level}` : ''}</p>{record.keterangan && <p>{record.keterangan}</p>}{canEdit && <div className="actions"><button onClick={() => onEdit(record)}>Edit</button><button onClick={() => onRemove(record)}>Hapus</button></div>}</div></article>)}</div></>;
 }

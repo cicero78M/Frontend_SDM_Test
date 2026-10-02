@@ -81,6 +81,22 @@ Profil memakai satu drawer dengan tiga tab agar workflow tidak bertumpuk:
 3. **Pendidikan & Diklat** — tombol input terpisah `+ Input pendidikan` dan
    `+ Input diklat`; form hanya terbuka setelah dipilih.
 
+### Riwayat Jabatan
+
+Form tambah/edit riwayat menggunakan mekanisme penempatan yang sama dengan
+**Update Data**:
+
+- Unsur Pembantu Pimpinan dimuat dari struktur parent-child aktif pada Satker,
+  mencakup rumpun `BAG*`, `SAT*`, `SI*`, dan `POLSEK` sampai unit terkecil.
+- Jabatan baru dimuat setelah unit dipilih dan hanya menampilkan mapping jabatan
+  yang sesuai dengan unit tersebut.
+- Perubahan Satker atau unsur mereset pilihan turunannya agar kombinasi lama
+  tidak terbawa.
+- Pada role `operator_polres`, Satker otomatis dikunci ke Satker personel dan
+  hanya unsur serta jabatan yang sesuai yang dapat dipilih.
+- Periode penugasan memvalidasi tanggal mulai/selesai; error API ditampilkan pada
+  form dan tombol simpan memiliki indikator proses.
+
 ### Administrasi dan navigasi
 
 - Administrasi Akses untuk admin pertama, terdiri dari Data User, Riwayat Persetujuan, Permintaan Akses, dan Scope Organisasi.
