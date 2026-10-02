@@ -33,7 +33,8 @@ npm run build
 - `src/components/personnel/` — form personel, profil karier, riwayat jabatan, pendidikan/diklat, dan picker organisasi.
 - `src/components/administration/` — user, approval, permission, scope, dan password administration.
 - `src/components/dashboard/` — ringkasan dan visualisasi analitik.
-- `src/styles.css` — layout dashboard, visualisasi, drawer, form, dan responsive UI.
+- `src/styles/index.css` — entrypoint stylesheet aplikasi.
+- `src/styles/base.css` — baseline layout, visualisasi, drawer, form, dan responsive UI; pemecahan fitur dilakukan bertahap agar cascade tetap stabil.
 - `.env.example` — alamat REST API publik/non-secret.
 
 ## Halaman dan fitur terbaru

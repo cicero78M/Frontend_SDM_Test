@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import './styles.css';
+import './styles/index.css';
 import { AppResponsive } from './components/app-shell';
 
 // Titik masuk frontend: seluruh fitur dirender melalui shell aplikasi aktif.
