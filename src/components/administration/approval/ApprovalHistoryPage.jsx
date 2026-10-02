@@ -1,6 +1,14 @@
-// Fitur audit: menampilkan seluruh keputusan approval yang sudah diproses.
-import React, { useEffect, useState } from 'react';
-import { request } from '../../../api';
+// Orkestrasi halaman audit riwayat approval.
+import React from 'react';
 import { PagePagination } from '../PagePagination';
+import { ApprovalHistoryTable } from './ApprovalHistoryTable';
+import { useApprovalRegistrations } from './useApprovalRegistrations';
 
-export function ApprovalHistoryPage() { const [items, setItems] = useState([]); const [meta, setMeta] = useState({ page: 1, limit: 10, total: 0 }); const [error, setError] = useState(''); async function load(page = meta.page) { try { const result = await request(`/auth/registrations/history?page=${page}&limit=10`); setItems(result.data || []); setMeta(result.meta || { page, limit: 10, total: 0 }); } catch (err) { setError(err.message); } } useEffect(() => { load(1); }, []); return <section className="page-section"><div className="page-heading"><div><span className="eyebrow">AUDIT AKSES</span><h1>Riwayat Persetujuan</h1><p className="muted">Rekam jejak identitas, keputusan approval, dan aktor yang memprosesnya.</p></div></div>{error && <div className="alert">{error}</div>}<div className="panel"><div className="table-wrap"><table><thead><tr><th>Identitas</th><th>Username</th><th>Status</th><th>Role akhir</th><th>Aktor</th><th>Waktu</th><th>Catatan</th></tr></thead><tbody>{items.map(item => <tr key={item.id_registration}><td><strong>{item.nama || '-'}</strong><small>{item.pangkat || '-'} · {item.nip || '-'}</small><small>{item.satker_asal || '-'}</small></td><td>{item.username}</td><td><span className="badge">{item.status === 'approved' ? 'Disetujui' : 'Ditolak'}</span></td><td>{item.approved_role || '-'}</td><td>{item.reviewer_username || '-'}</td><td>{item.reviewed_at ? new Date(item.reviewed_at).toLocaleString('id-ID') : '-'}</td><td>{item.review_note || '-'}</td></tr>)}{!items.length && <tr><td colSpan="7" className="empty">Belum ada riwayat persetujuan.</td></tr>}</tbody></table></div><PagePagination meta={meta} onChange={load} /></div></section>; }
+export function ApprovalHistoryPage() {
+  const { items, meta, error, load } = useApprovalRegistrations('history');
+
+  return <section className="page-section"><div className="page-heading"><div><span className="eyebrow">AUDIT AKSES</span><h1>Riwayat Persetujuan</h1><p className="muted">Rekam jejak identitas, keputusan approval, dan aktor yang memprosesnya.</p></div></div>
+    {error && <div className="alert">{error}</div>}
+    <div className="panel"><ApprovalHistoryTable items={items} /><PagePagination meta={meta} onChange={load} /></div>
+  </section>;
+}

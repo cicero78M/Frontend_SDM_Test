@@ -1,6 +1,32 @@
-// Fitur approval: admin meninjau pendaftaran dan menetapkan role akses.
-import React, { useEffect, useState } from 'react';
+// Orkestrasi halaman approval: data hook, aksi keputusan, tabel, dan pagination.
+import React, { useState } from 'react';
 import { request } from '../../../api';
 import { PagePagination } from '../PagePagination';
+import { ApprovalTable } from './ApprovalTable';
+import { useApprovalRegistrations } from './useApprovalRegistrations';
 
-export function ApprovalPage() { const [items, setItems] = useState([]); const [meta, setMeta] = useState({ page: 1, limit: 10, total: 0 }); const [roles, setRoles] = useState({}); const [error, setError] = useState(''); async function load(page = meta.page) { try { const result = await request(`/auth/registrations/pending?page=${page}&limit=10`); setItems(result.data || []); setMeta(result.meta || { page, limit: 10, total: 0 }); } catch (err) { setError(err.message); } } useEffect(() => { load(1); }, []); async function decide(item, decision) { try { await request(`/auth/registrations/${item.id_registration}`, { method: 'PATCH', body: JSON.stringify({ decision, approved_role: roles[item.id_registration] || 'viewer' }) }); load(meta.page); } catch (err) { setError(err.message); } } return <section className="page-section"><div className="page-heading"><div><span className="eyebrow">ADMINISTRASI</span><h1>Permintaan Akses</h1><p className="muted">Tinjau identitas pendaftar dan tetapkan role akses.</p></div></div>{error && <div className="alert">{error}</div>}<div className="panel"><div className="table-wrap"><table><thead><tr><th>Identitas</th><th>Username</th><th>Role awal</th><th>Tetapkan role</th><th>Aksi</th></tr></thead><tbody>{items.map(item => <tr key={item.id_registration}><td><strong>{item.nama || '-'}</strong><small>{item.pangkat || '-'} · {item.nip || '-'}</small><small>{item.satker_asal || '-'}</small></td><td>{item.username}</td><td><span className="badge">{item.requested_role}</span></td><td><select value={roles[item.id_registration] || 'viewer'} onChange={e => setRoles({ ...roles, [item.id_registration]: e.target.value })}><option value="viewer">Viewer</option><option value="editor">Editor</option><option value="operator_satker">Operator Satker</option><option value="operator_polda">Operator Polda</option><option value="admin_ssdm">Admin SSDM</option><option value="admin">Admin</option></select></td><td className="actions-cell"><button onClick={() => decide(item, 'reject')}>Tolak</button><button className="primary" onClick={() => decide(item, 'approve')}>Setujui</button></td></tr>)}{!items.length && <tr><td colSpan="5" className="empty">Tidak ada pendaftaran yang menunggu approval.</td></tr>}</tbody></table></div><PagePagination meta={meta} onChange={load} /></div></section>; }
+export function ApprovalPage() {
+  const { items, meta, error, load, setError } = useApprovalRegistrations('pending');
+  const [roles, setRoles] = useState({});
+
+  function changeRole(id, role) {
+    setRoles(current => ({ ...current, [id]: role }));
+  }
+
+  async function decide(item, decision) {
+    try {
+      await request(`/auth/registrations/${item.id_registration}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ decision, approved_role: roles[item.id_registration] || 'viewer' }),
+      });
+      load(meta.page);
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
+  return <section className="page-section"><div className="page-heading"><div><span className="eyebrow">ADMINISTRASI</span><h1>Permintaan Akses</h1><p className="muted">Tinjau identitas pendaftar dan tetapkan role akses.</p></div></div>
+    {error && <div className="alert">{error}</div>}
+    <div className="panel"><ApprovalTable items={items} roles={roles} onRoleChange={changeRole} onDecision={decide} /><PagePagination meta={meta} onChange={load} /></div>
+  </section>;
+}
