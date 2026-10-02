@@ -1,6 +1,6 @@
 // Hook data user aktif: fetch daftar dan pagination.
 import { useEffect, useState } from 'react';
-import { request } from '../../api';
+import { request } from '../../../api';
 
 export function useApprovedUsers() {
   const [users, setUsers] = useState([]);

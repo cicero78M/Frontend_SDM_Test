@@ -1,7 +1,7 @@
 // Modal perubahan role untuk user yang sudah disetujui.
 import { useState } from 'react';
-import { request } from '../../api';
-import { ApprovalRoleOptions } from './approval-workflow/approvalRoles.jsx';
+import { request } from '../../../api';
+import { ApprovalRoleOptions } from '../approval-workflow/approvalRoles.jsx';
 
 export function RolePromotionModal({ user, onClose, onSaved, onError }) {
   const [role, setRole] = useState(user.role);

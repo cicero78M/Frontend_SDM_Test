@@ -1,6 +1,6 @@
 // Navigasi antar fitur administrasi akses.
 import React from 'react';
-import { ApprovedUsersPage } from './ApprovedUsersPage';
+import { ApprovedUsersPage } from './approved-users/ApprovedUsersPage';
 import { ApprovalHistoryPage } from './approval-workflow/ApprovalHistoryPage';
 import { ApprovalPage } from './approval-workflow/ApprovalPage';
 import { ScopeOrganizationPage } from './ScopeOrganizationPage';

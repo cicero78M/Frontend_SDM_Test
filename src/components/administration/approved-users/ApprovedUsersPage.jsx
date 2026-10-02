@@ -1,6 +1,6 @@
 // Orkestrasi daftar user aktif, pagination, dan perubahan role.
 import { useState } from 'react';
-import { PagePagination } from './PagePagination';
+import { PagePagination } from '../PagePagination';
 import { ApprovedUsersTable } from './ApprovedUsersTable';
 import { RolePromotionModal } from './RolePromotionModal';
 import { useApprovedUsers } from './useApprovedUsers';
