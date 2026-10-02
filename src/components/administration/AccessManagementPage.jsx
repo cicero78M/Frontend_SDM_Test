@@ -5,4 +5,17 @@ import { ApprovalHistoryPage } from './approval-workflow/ApprovalHistoryPage';
 import { ApprovalPage } from './approval-workflow/ApprovalPage';
 import { ScopeOrganizationPage } from './scope-organization/ScopeOrganizationPage';
 
-export function AccessManagementPage({ page, onPage }) { return <section className="page-section"><div className="subpage-nav"><button className={page === 'users' ? 'active' : ''} onClick={() => onPage('users')}>Data User</button><button className={page === 'history' ? 'active' : ''} onClick={() => onPage('history')}>Riwayat Persetujuan</button><button className={page === 'approval' ? 'active' : ''} onClick={() => onPage('approval')}>Permintaan Akses</button><button className={page === 'scopes' ? 'active' : ''} onClick={() => onPage('scopes')}>Scope Organisasi</button></div>{page === 'users' && <ApprovedUsersPage />}{page === 'history' && <ApprovalHistoryPage />}{page === 'approval' && <ApprovalPage />}{page === 'scopes' && <ScopeOrganizationPage />}</section>; }
+export function AccessManagementPage({ page, onPage }) {
+  return <section className="page-section">
+    <AccessTabs page={page} onPage={onPage} />
+    {page === 'users' && <ApprovedUsersPage />}
+    {page === 'history' && <ApprovalHistoryPage />}
+    {page === 'approval' && <ApprovalPage />}
+    {page === 'scopes' && <ScopeOrganizationPage />}
+  </section>;
+}
+
+function AccessTabs({ page, onPage }) {
+  const tabs = [['users', 'Data User'], ['history', 'Riwayat Persetujuan'], ['approval', 'Permintaan Akses'], ['scopes', 'Scope Organisasi']];
+  return <div className="subpage-nav">{tabs.map(([value, label]) => <button key={value} className={page === value ? 'active' : ''} onClick={() => onPage(value)}>{label}</button>)}</div>;
+}

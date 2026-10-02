@@ -1,2 +1,10 @@
 // Pagination bersama untuk daftar data administrasi.
-export function PagePagination({ meta, onChange }) { const pages = Math.max(1, Math.ceil((meta.total || 0) / (meta.limit || 10))); return <div className="pagination"><button disabled={meta.page <= 1} onClick={() => onChange(meta.page - 1, meta.limit)}>Sebelumnya</button><span>Halaman {meta.page} dari {pages} · {meta.total || 0} data</span><label className="page-size">Tampilkan<select value={meta.limit || 10} onChange={e => onChange(1, Number(e.target.value))}><option value="10">10</option><option value="25">25</option><option value="50">50</option></select></label><button disabled={meta.page >= pages} onClick={() => onChange(meta.page + 1, meta.limit)}>Berikutnya</button></div>; }
+export function PagePagination({ meta, onChange }) {
+  const pages = Math.max(1, Math.ceil((meta.total || 0) / (meta.limit || 10)));
+  return <div className="pagination">
+    <button disabled={meta.page <= 1} onClick={() => onChange(meta.page - 1, meta.limit)}>Sebelumnya</button>
+    <span>Halaman {meta.page} dari {pages} · {meta.total || 0} data</span>
+    <label className="page-size">Tampilkan<select value={meta.limit || 10} onChange={event => onChange(1, Number(event.target.value))}><option value="10">10</option><option value="25">25</option><option value="50">50</option></select></label>
+    <button disabled={meta.page >= pages} onClick={() => onChange(meta.page + 1, meta.limit)}>Berikutnya</button>
+  </div>;
+}
