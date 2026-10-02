@@ -1,13 +1,14 @@
 import { PasswordField } from './PasswordField';
 
-export function AuthForm({ mode, form, title, showPassword, showConfirmPassword, error, notice, update, submit, changeMode, setShowPassword, setShowConfirmPassword }) {
+export function AuthForm({ mode, form, title, showPassword, showConfirmPassword, error, notice, update, submit, resendOtp, changeMode, setShowPassword, setShowConfirmPassword }) {
   const isCredentialsMode = mode === 'login' || mode === 'register';
 
   return (
     <>
       <form onSubmit={submit}>
-        {mode !== 'reset' && <UsernameFields mode={mode} form={form} update={update} />}
+        {mode !== 'reset' && mode !== 'verify' && <UsernameFields mode={mode} form={form} update={update} />}
         {isCredentialsMode && <CredentialFields mode={mode} form={form} update={update} showPassword={showPassword} showConfirmPassword={showConfirmPassword} setShowPassword={setShowPassword} setShowConfirmPassword={setShowConfirmPassword} />}
+        {mode === 'verify' && <OtpFields form={form} update={update} />}
         {mode === 'reset' && <ResetFields form={form} update={update} />}
         {error && <div className="alert">{error}</div>}
         {notice && <div className="hint">{notice}</div>}
@@ -15,6 +16,7 @@ export function AuthForm({ mode, form, title, showPassword, showConfirmPassword,
       </form>
       <div className="auth-links">
         {mode === 'login' && <><button onClick={() => changeMode('register')}>Daftar akun</button><button onClick={() => changeMode('forgot')}>Lupa password?</button></>}
+        {mode === 'verify' && <button type="button" onClick={resendOtp}>Kirim ulang OTP</button>}
         {mode !== 'login' && <button onClick={() => changeMode('login')}>Kembali ke login</button>}
       </div>
     </>
@@ -22,7 +24,7 @@ export function AuthForm({ mode, form, title, showPassword, showConfirmPassword,
 }
 
 function UsernameFields({ mode, form, update }) {
-  return <><label>Username<input required name="username" value={form.username} onChange={update} /></label>{mode === 'register' && <><label>Nama lengkap<input required name="nama" value={form.nama} onChange={update} /></label><label>Pangkat<input required name="pangkat" value={form.pangkat} onChange={update} /></label><label>NRP/NIP<input required name="nip" value={form.nip} onChange={update} /></label><label>Satker asal<input required name="satker_asal" value={form.satker_asal} onChange={update} /></label></>}</>;
+  return <><label>Username<input required name="username" value={form.username} onChange={update} /></label>{mode === 'register' && <><label>Email validasi<input required type="email" name="email" value={form.email} onChange={update} /></label><label>Nama lengkap<input required name="nama" value={form.nama} onChange={update} /></label><label>Pangkat<input required name="pangkat" value={form.pangkat} onChange={update} /></label><label>NRP/NIP<input required name="nip" value={form.nip} onChange={update} /></label><label>Satker asal<input required name="satker_asal" value={form.satker_asal} onChange={update} /></label></>}</>;
 }
 
 function CredentialFields({ mode, form, update, showPassword, showConfirmPassword, setShowPassword, setShowConfirmPassword }) {
@@ -31,4 +33,8 @@ function CredentialFields({ mode, form, update, showPassword, showConfirmPasswor
 
 function ResetFields({ form, update }) {
   return <><label>Token reset<input required name="token" value={form.token} onChange={update} /></label><label>Password baru<input required minLength="8" type="password" name="new_password" value={form.new_password} onChange={update} /></label></>;
+}
+
+function OtpFields({ form, update }) {
+  return <><p className="muted">Masukkan 6 digit OTP yang dikirim ke {form.email}.</p><label>OTP email<input required inputMode="numeric" pattern="[0-9]{6}" maxLength="6" name="otp" value={form.otp} onChange={update} /></label></>;
 }

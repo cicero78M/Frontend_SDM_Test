@@ -28,7 +28,7 @@ npm run build
 
 - `src/main.jsx` — entry point aplikasi dan orkestrasi halaman utama.
 - `src/api.js` — API client, utilitas hierarki Satker/unit, dan format tanggal.
-- `src/components/auth/` — login, registrasi, reset/ganti password, dan alur sesi.
+- `src/components/auth/` — login, registrasi dengan email/OTP, reset/ganti password, dan alur sesi.
 - `src/components/app-shell/` — layout, sidebar, daftar personel, dan responsive shell.
 - `src/components/personnel/` — form personel, profil karier, riwayat jabatan, pendidikan/diklat, dan picker organisasi.
 - `src/components/administration/` — user, approval, permission, scope, dan password administration.
@@ -86,7 +86,7 @@ Profil memakai satu drawer dengan tiga tab agar workflow tidak bertumpuk:
 - Administrasi Akses untuk admin pertama, terdiri dari Data User, Riwayat Persetujuan, Permintaan Akses, dan Scope Organisasi.
 - Halaman Permintaan Akses menampilkan registrasi pending dan menyediakan aksi Setujui/Tolak serta penetapan role.
 - Approval registrasi hanya dapat diproses oleh role `admin` pertama; Admin SSDM tetap mengelola scope dan user aktif sesuai kewenangannya.
-- Login, registrasi, lupa/reset password, dan ganti password.
+- Login, registrasi dengan email dan validasi OTP, lupa/reset password, dan ganti password.
 - Sidebar desktop permanen; sidebar mobile memiliki tombol buka, tombol tutup,
   overlay, dan auto-close setelah menu dipilih.
 
