@@ -1,5 +1,6 @@
 import { DependentSatkerPicker } from './DependentSatkerPicker';
 import { DependentUnitPicker } from './DependentUnitPicker';
+import { GolonganSelect } from './GolonganSelect';
 
 export function PersonForm({
   form,
@@ -29,8 +30,7 @@ export function PersonForm({
     <label>Tanggal Lahir *<input required type="date" name="tanggal_lahir" value={form.tanggal_lahir} onChange={update} /></label>
     <label>Jenis Personil<select name="jenis_personel" value={form.jenis_personel} onChange={update}><option value="POLRI">POLRI — NRP</option><option value="ASN">ASN — NIP</option><option value="PPPK">PPPK — NIP</option><option value="HONORER">HONORER — NIP</option><option value="LAINNYA">LAINNYA — NIP</option></select></label>
     <label>NRP/NIP *<input required name="nip" value={form.nip} onChange={update} /></label>
-    <label>PANGKAT{form.jenis_personel === 'POLRI' ? <select required name="pangkat" value={form.pangkat} onChange={update}><option value="">Pilih pangkat POLRI</option>{rankOptions.map(rank => <option key={rank} value={rank}>{rank}</option>)}</select> : <input name="pangkat" value={form.pangkat} onChange={update} placeholder="Pangkat atau kualifikasi" />}</label>
-    <label>Golongan (ASN)<select name="id_golongan" value={form.id_golongan} onChange={update}><option value="">Tidak menggunakan golongan ASN</option>{options(masters.golongan, 'id_golongan', 'nama_pangkat')}</select></label>
+    {form.jenis_personel === 'POLRI' ? <label>PANGKAT POLRI<select required name="pangkat" value={form.pangkat} onChange={update}><option value="">Pilih pangkat POLRI</option>{rankOptions.map(rank => <option key={rank} value={rank}>{rank}</option>)}</select></label> : <label>Golongan<GolonganSelect items={masters.golongan} value={form.id_golongan} onChange={update} required /></label>}
     <DependentSatkerPicker simple flat items={masters.satker} value={form.id_satker} onChange={onSatkerChange} />
     <DependentUnitPicker flat={!hierarchicalUnit} personnelFlat={hierarchicalUnit} items={unitOptions} value={form.id_unit} onChange={onUnitChange} />
     {unitOptions.some(item => String(item.id_unit) === String(form.id_unit) && String(item.kode_unit || '').toUpperCase() === 'POLSEK') && <label>Nama Polsek *<input required name="nama_polsek" value={form.nama_polsek || ''} onChange={onPolsekNameChange} placeholder="Masukkan nama Polsek" maxLength="100" /></label>}

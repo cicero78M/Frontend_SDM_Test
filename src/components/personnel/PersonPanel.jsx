@@ -31,7 +31,13 @@ export function PersonPanel({ person, onClose, onSaved }) {
     request(`/master/jabatan?satker_id=${Number(form.id_satker)}&unit_id=${Number(form.id_unit)}`).then(result => setJobOptions(result.data || [])).catch(err => { setJobOptions([]); setError(err.message); });
   }, [form.id_satker, form.id_unit]);
 
-  const update = event => setForm(current => ({ ...current, [event.target.name]: event.target.value }));
+  const update = event => setForm(current => {
+    const { name, value } = event.target;
+    if (name === 'jenis_personel') {
+      return { ...current, jenis_personel: value, pangkat: '', id_golongan: '' };
+    }
+    return { ...current, [name]: value };
+  });
   const rankOptions = form.pangkat && form.jenis_personel === 'POLRI' && !pangkatPolri.includes(form.pangkat) ? [form.pangkat, ...pangkatPolri] : pangkatPolri;
   const selectedSatker = masters.satker.find(item => String(item.id_satker) === String(form.id_satker));
   const parentSatker = selectedSatker && masters.satker.find(item => String(item.id_satker) === String(selectedSatker.id_satker_induk));
