@@ -2,3 +2,4 @@
 export { PagePagination } from './PagePagination';
 export { PasswordPanel } from './password-management/PasswordPanel';
 export { ScopeManagementPage } from './ScopeManagementPage';
+export { AuditLogPage } from './AuditLogPage';
