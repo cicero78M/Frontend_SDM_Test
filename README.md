@@ -48,7 +48,7 @@ scope user, meliputi:
 
 - total/status personel;
 - distribusi golongan/pangkat dari master personel, dipisahkan menjadi chart POLRI dan chart ASN;
-- kualitas data personel: kelengkapan field dan status validasi data staging;
+- kualitas dan kelengkapan data personel untuk mendukung seleksi;
 - jenjang pendidikan;
 - personel pernah diklat, yang belum, dan personel dengan lebih dari satu riwayat diklat;
 - personel dengan riwayat mutasi, yang belum, dan personel dengan lebih dari satu riwayat mutasi;
@@ -62,6 +62,10 @@ scope user, meliputi:
 Urutan dashboard disusun dari ringkasan umum menuju detail: ringkasan utama,
 demografi, pangkat/jabatan, pendidikan dan masa dinas, proyeksi pensiun,
 diklat/mutasi, lalu kualitas dan kesiapan data.
+
+Dashboard mendukung kebutuhan seleksi dengan menyediakan konteks personel,
+kualifikasi, riwayat jabatan, pangkat/golongan, masa dinas, dan indikator
+kelengkapan data sesuai scope pengguna.
 
 ### Data Personel
 
