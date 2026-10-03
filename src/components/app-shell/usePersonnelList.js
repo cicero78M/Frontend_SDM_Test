@@ -4,6 +4,7 @@ import { request } from '../../api';
 export const initialPersonnelFilters = {
   status: '',
   education: '',
+  position: '',
   training: '',
   mutation: '',
   service_min: '',
@@ -12,37 +13,42 @@ export const initialPersonnelFilters = {
 
 export function usePersonnelList(user, page) {
   const [people, setPeople] = useState([]);
+  const [statusOptions, setStatusOptions] = useState([]);
+  const [listError, setListError] = useState('');
   const [meta, setMeta] = useState({ page: 1, limit: 10, total: 0 });
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState(initialPersonnelFilters);
-  const [appliedFilters, setAppliedFilters] = useState(initialPersonnelFilters);
 
-  async function load(pageNumber = 1, limit = meta.limit || 10, activeFilters = appliedFilters) {
+  async function load(pageNumber = 1, limit = meta.limit || 10, activeFilters = filters) {
     try {
+      setListError('');
       const params = new URLSearchParams({ page: pageNumber, limit, search });
       Object.entries(activeFilters).forEach(([key, value]) => { if (value !== '') params.set(key, value); });
       const result = await request(`/personel?${params.toString()}`);
       setPeople(result.data || []);
       setMeta(result.meta || { page: pageNumber, limit, total: 0 });
-    } catch {}
+    } catch (error) {
+      setPeople([]);
+      setMeta(current => ({ ...current, page: pageNumber, total: 0 }));
+      setListError(error.message || 'Data personel tidak dapat dimuat.');
+    }
   }
 
   function updateFilter(name, value) {
     setFilters(current => ({ ...current, [name]: value }));
   }
 
-  function applyFilters() {
-    setAppliedFilters({ ...filters });
-  }
-
   function resetFilters() {
     setFilters(initialPersonnelFilters);
-    setAppliedFilters(initialPersonnelFilters);
   }
 
   useEffect(() => {
-    if (user && page === 'people') load(1, meta.limit || 10, appliedFilters);
-  }, [user, search, page, JSON.stringify(appliedFilters)]);
+    if (user) request('/master/status-personel').then(result => setStatusOptions((result.data || []).map(item => item.status))).catch(() => {});
+  }, [user]);
 
-  return { people, meta, search, setSearch, load, filters, updateFilter, applyFilters, resetFilters };
+  useEffect(() => {
+    if (user && page === 'people') load(1, meta.limit || 10, filters);
+  }, [user, search, page, JSON.stringify(filters)]);
+
+  return { people, meta, search, setSearch, load, filters, updateFilter, resetFilters, statusOptions, listError };
 }

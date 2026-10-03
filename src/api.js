@@ -68,6 +68,7 @@ export async function request(path, options = {}) {
     }
   });
   const body = response.status === 204 ? null : await response.json().catch(() => ({}));
+  if (response.status === 401 && token) window.dispatchEvent(new Event('sdm:unauthorized'));
   if (!response.ok) throw new Error(body.error || 'Request gagal.');
   return body;
 }

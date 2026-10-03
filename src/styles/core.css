@@ -2028,6 +2028,131 @@ nav a:hover {
     flex: 1;
   }
 }
+
+/* Profile drawer mobile layout: keep every child inside the viewport. */
+@media (max-width: 600px) {
+  .drawer-backdrop {
+    align-items: stretch;
+    justify-content: stretch;
+    padding: 0;
+    overflow: hidden;
+  }
+  .drawer.profile-drawer {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    min-height: 0;
+    border-radius: 0;
+    padding: 16px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .profile-drawer .drawer-head {
+    top: -16px;
+    margin: 0 -16px 14px;
+    padding: 14px 16px 12px;
+  }
+  .profile-drawer .drawer-head > div {
+    min-width: 0;
+  }
+  .profile-drawer h2 {
+    max-width: calc(100vw - 76px);
+    font-size: 20px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+  .profile-drawer .drawer-head p {
+    overflow-wrap: anywhere;
+  }
+  .profile-drawer .icon-btn {
+    flex: 0 0 34px;
+    align-self: flex-start;
+  }
+  .profile-summary,
+  .profile-overview {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin: 14px 0;
+    padding: 12px;
+  }
+  .profile-overview > p {
+    grid-column: auto;
+  }
+  .profile-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    margin: 14px 0;
+    padding-bottom: 10px;
+  }
+  .profile-tabs button {
+    min-width: 0;
+    padding: 9px 7px;
+    font-size: 11px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+  .timeline-head,
+  .qualification-head,
+  .section-label {
+    min-width: 0;
+  }
+  .timeline-head h3,
+  .qualification-head h3 {
+    font-size: 16px;
+  }
+  .career-timeline {
+    margin-left: 6px;
+    padding-left: 16px;
+  }
+  .career-dot {
+    left: -23px;
+  }
+  .career-card,
+  .qualification-item {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .career-card {
+    padding: 12px;
+  }
+  .history-head {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .history-head > div {
+    min-width: 0;
+    flex: 1 1 150px;
+  }
+  .qualification-item {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 9px;
+    padding: 11px;
+  }
+  .qualification-item button,
+  .qualification-actions button,
+  .section-label button {
+    width: 100%;
+  }
+  .profile-drawer input,
+  .profile-drawer select,
+  .profile-drawer textarea {
+    width: 100%;
+    max-width: 100%;
+  }
+  .profile-drawer .form-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .profile-drawer .actions {
+    width: 100%;
+  }
+  .profile-drawer .actions button {
+    min-width: 0;
+  }
+}
 /* Kategori tambahan dashboard: personel dengan lebih dari satu riwayat. */
 .legend i.multiple-dot {
   background: #7b61a8;
