@@ -9,6 +9,7 @@ export function AppSidebar({ user, page, sidebarOpen, onNavigate, onLogout, onPa
       <a className={page === 'people' ? 'active' : ''} onClick={() => onNavigate('people')}>♙ Data Personel</a>
       {canManageScope && <a className={page === 'scopes' ? 'active' : ''} onClick={() => onNavigate('scopes')}>⌖ Scope Organisasi</a>}
       <a className={page === 'audit' ? 'active' : ''} onClick={() => onNavigate('audit')}>▣ Log Aktivitas</a>
+      <a className={page === 'profile' ? 'active' : ''} onClick={() => onNavigate('profile')}>◎ Profil Saya</a>
       <a onClick={onPassword}>⚙ Ganti password</a>
     </nav><div className="user-box"><strong>{user.username}</strong><small>{user.role}</small><button onClick={onLogout}>Keluar</button></div></aside>
   </>;

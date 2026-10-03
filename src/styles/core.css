@@ -162,6 +162,57 @@ h1 {
 .panel {
   padding: 24px;
 }
+.profile-layout {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.7fr) minmax(0, 1.8fr);
+  gap: 18px;
+}
+.profile-hero {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 190px;
+}
+.profile-avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 68px;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #d8a84e;
+  color: #102d42;
+  font: 700 30px "Space Grotesk";
+}
+.profile-hero h2 {
+  font: 600 22px "Space Grotesk";
+  margin-bottom: 5px;
+}
+.profile-role {
+  display: inline-block;
+  margin-top: 13px;
+}
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+}
+.profile-field {
+  padding: 16px 12px;
+  border-bottom: 1px solid #edf0f2;
+}
+.profile-field dt {
+  color: #7c8790;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.profile-field dd {
+  margin: 7px 0 0;
+  color: #34434d;
+  font-weight: 600;
+}
 .panel-head {
   display: flex;
   justify-content: space-between;
@@ -2487,6 +2538,12 @@ nav a:hover {
   border: 0;
 }
 @media (max-width: 700px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
   .personnel-heading {
     margin-bottom: 22px;
   }
