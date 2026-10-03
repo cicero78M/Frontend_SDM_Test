@@ -56,6 +56,16 @@ export function hierarchicalUnitOptions(items) {
   return result;
 }
 
+// Mengubah detail validasi API menjadi pesan yang dapat dipahami operator.
+function apiErrorMessage(body) {
+  const details = Array.isArray(body?.details) ? body.details : [];
+  if (!details.length) return body?.error || 'Request gagal.';
+  const explanation = details
+    .map(item => `${item.label || item.field || 'Data'}: ${item.message || 'tidak valid'}`)
+    .join(' • ');
+  return `${body?.error || 'Validasi gagal.'} ${explanation}`;
+}
+
 // Menambahkan token login dan meneruskan error API ke komponen pemanggil.
 export async function request(path, options = {}) {
   const token = localStorage.getItem('sdm_token');
@@ -69,6 +79,6 @@ export async function request(path, options = {}) {
   });
   const body = response.status === 204 ? null : await response.json().catch(() => ({}));
   if (response.status === 401 && token) window.dispatchEvent(new Event('sdm:unauthorized'));
-  if (!response.ok) throw new Error(body.error || 'Request gagal.');
+  if (!response.ok) throw new Error(apiErrorMessage(body));
   return body;
 }
