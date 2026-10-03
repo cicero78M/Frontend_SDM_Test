@@ -8,6 +8,7 @@ import { CareerProfilePanel, PersonPanel } from '../personnel';
 import { AppSidebar } from './AppSidebar';
 import { PersonnelPage } from './PersonnelPage';
 import { usePersonnelList } from './usePersonnelList';
+import { UserProfilePage } from '../profile';
 
 export function AppResponsive() {
   const [user, setUser] = useState(null);
@@ -57,7 +58,7 @@ export function AppResponsive() {
   return <div className={`shell ${sidebarOpen ? 'sidebar-open' : ''}`}>
     <AppSidebar user={user} page={page} sidebarOpen={sidebarOpen} onNavigate={go} onLogout={logout} onPassword={() => { setPasswordPanel(true); setSidebarOpen(false); }} onOpen={() => setSidebarOpen(true)} onClose={() => setSidebarOpen(false)} />
     <main className="content">
-      {page === 'dashboard' ? <PersonnelDashboardPage user={user} /> : page === 'audit' ? <AuditLogPage /> : adminPage ? <ScopeManagementPage /> : <PersonnelPage user={user} canEdit={canEdit} people={people} meta={meta} search={search} onSearch={setSearch} onLoad={load} filters={filters} statusOptions={statusOptions} listError={listError} onFilterChange={updateFilter} onResetFilters={resetFilters} onProfile={setProfile} onEdit={setEditor} />}
+      {page === 'dashboard' ? <PersonnelDashboardPage user={user} /> : page === 'audit' ? <AuditLogPage /> : page === 'profile' ? <UserProfilePage user={user} /> : adminPage ? <ScopeManagementPage /> : <PersonnelPage user={user} canEdit={canEdit} people={people} meta={meta} search={search} onSearch={setSearch} onLoad={load} filters={filters} statusOptions={statusOptions} listError={listError} onFilterChange={updateFilter} onResetFilters={resetFilters} onProfile={setProfile} onEdit={setEditor} />}
       {passwordPanel && <PasswordPanel onClose={() => setPasswordPanel(false)} />}
       {profile && <CareerProfilePanel person={profile} userRole={user?.role} canEdit={canEdit} onClose={() => setProfile(null)} />}
       {editor && <PersonPanel person={editor} onClose={() => setEditor(null)} onSaved={() => { setEditor(null); load(meta.page); }} />}
