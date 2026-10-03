@@ -1,8 +1,9 @@
 function DonutCard({ title, description, ratio, variant = '', doneLabel, pendingLabel, multipleLabel }) {
+  const safeRatio = Math.min(Math.max(Number(ratio) || 0, 0), 100);
   return (
     <section className="panel dashboard-card donut-card">
       <div className="panel-head"><div><h2>{title}</h2><p className="muted">{description}</p></div></div>
-      <div className={`donut ${variant}`} style={{ '--ratio': `${ratio}%` }}><strong>{Math.round(ratio)}%</strong></div>
+      <div className={`donut ${variant}`} style={{ '--ratio': `${safeRatio}%` }}><strong>{Math.round(safeRatio)}%</strong></div>
       <div className="legend"><span><i className={`done ${variant ? 'mutation-dot' : ''}`} /> {doneLabel}</span><span><i /> {pendingLabel}</span><span><i className="multiple-dot" /> {multipleLabel}</span></div>
     </section>
   );

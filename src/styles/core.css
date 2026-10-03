@@ -596,6 +596,11 @@ select {
 .audit-target-meta { display: block; margin-top: 4px; }
 .audit-table-wrap td { vertical-align: top; }
 .audit-table-wrap details pre { max-width: 360px; max-height: 180px; overflow: auto; white-space: pre-wrap; font-size: .72rem; margin: 8px 0 0; }
+.dashboard-state { display: grid; gap: 12px; justify-items: start; }
+.bar-label { gap: 10px; }
+.bar-label span { min-width: 0; overflow-wrap: anywhere; }
+.bar-label strong { display: inline-flex; align-items: baseline; gap: 5px; white-space: nowrap; }
+.bar-label strong small { color: var(--muted); font-size: .7rem; font-weight: 700; }
 
 @media (max-width: 900px) {
   .audit-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
