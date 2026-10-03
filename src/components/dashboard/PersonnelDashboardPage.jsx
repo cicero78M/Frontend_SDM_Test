@@ -32,7 +32,6 @@ export function PersonnelDashboardPage({ user }) {
       <DashboardDonuts overview={overview} percent={percent} pernahDiklat={pernahDiklat} pernahMutasi={pernahMutasi} />
       <section className="dashboard-grid dashboard-grid-quality">
         <DashboardBars title="Kelengkapan data personel" items={overview.kualitas_data} empty="Tidak ada kekurangan data terdeteksi." />
-        <DashboardBars title="Status validasi staging" items={overview.validasi_staging} empty="Tidak ada data staging dalam scope." />
       </section>
     </section>
   );
