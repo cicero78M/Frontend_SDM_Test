@@ -15,7 +15,7 @@ function Field({ label, value }) {
   return <div className="profile-field"><dt>{label}</dt><dd>{value || '-'}</dd></div>;
 }
 
-export function UserProfilePage({ user }) {
+export function UserProfilePage({ user, onPassword }) {
   const [profile, setProfile] = useState(null);
   const [error, setError] = useState('');
 
@@ -32,7 +32,7 @@ export function UserProfilePage({ user }) {
 
   return <>
     <header>
-      <div><span className="eyebrow">AKUN SAYA</span><h1>Profil user</h1><p className="muted">Informasi akun dan identitas pengguna aplikasi.</p></div>
+      <div><span className="eyebrow">AKUN SAYA</span><h1>Profil user</h1><p className="muted">Informasi akun dan identitas pengguna aplikasi.</p></div><button className="primary" onClick={onPassword}>Ganti password</button>
     </header>
     <section className="profile-layout">
       <article className="panel profile-hero">
