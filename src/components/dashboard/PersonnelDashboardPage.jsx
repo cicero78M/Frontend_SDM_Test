@@ -24,7 +24,7 @@ export function PersonnelDashboardPage({ user }) {
         <DashboardBars title="Golongan / pangkat POLRI" items={overview.golongan_polri} total={total} empty="Belum ada data golongan/pangkat POLRI." />
         <DashboardBars title="Golongan / pangkat ASN" items={overview.golongan_asn} total={total} empty="Belum ada data golongan/pangkat ASN." />
         <DashboardBars title="Kelompok jabatan / nivelering" items={overview.kelompok_jabatan} total={total} empty="Belum ada histori jabatan aktif dengan nivelering." />
-        <DashboardBars title="Jenjang pendidikan" items={overview.pendidikan} total={total} />
+        <DashboardBars title="Jenjang Pendidikan Terakhir" items={overview.pendidikan} total={total} />
         <DashboardBars title="Kelompok usia" items={overview.kelompok_usia} total={total} />
         <DashboardBars title="Lama dinas" items={overview.lama_dinas} total={total} />
         <PensionCard total={total} pension={overview.pensiun} />
