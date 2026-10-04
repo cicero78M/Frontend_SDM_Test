@@ -13,6 +13,7 @@ export function PersonPanel({ person, onClose, onSaved }) {
   const [unitOptions, setUnitOptions] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     Promise.all(['/master/jabatan', '/master/golongan', '/master/satker'].map(path => request(path)))
@@ -47,14 +48,17 @@ export function PersonPanel({ person, onClose, onSaved }) {
     || String(selectedSatker?.tipe_satker || '').toUpperCase() === 'DIREKTORAT';
 
   async function save(event) {
-    event.preventDefault(); setError('');
+    event.preventDefault();
+    if (saving) return;
+    setError('');
+    setSaving(true);
     try {
       const payload = { ...form, jenis_identitas: form.jenis_personel === 'POLRI' ? 'NRP' : 'NIP', id_unit: Number(form.id_unit), id_jabatan: Number(form.id_jabatan), id_golongan: form.id_golongan ? Number(form.id_golongan) : null, id_satker: Number(form.id_satker), batas_usia_pensiun: Number(form.batas_usia_pensiun), tanggal_masuk: form.tanggal_masuk || null, nama_polsek: form.nama_polsek?.trim() || null, pangkat: form.pangkat || null };
       const path = person.id_pegawai ? `/personel/${person.id_pegawai}` : '/personel';
       await request(path, { method: person.id_pegawai ? 'PUT' : 'POST', body: JSON.stringify(payload) });
       onSaved();
-    } catch (err) { setError(err.message); }
+    } catch (err) { setError(err.message); } finally { setSaving(false); }
   }
 
-  return <div className="drawer-backdrop"><section className="drawer"><div className="drawer-head"><div><span className="eyebrow">{person.id_pegawai ? 'EDIT DATA' : 'DATA BARU'}</span><h2>{person.id_pegawai ? person.nama : 'Tambah personel'}</h2></div><button className="icon-btn" onClick={onClose}>×</button></div><PersonForm form={form} masters={masters} jobOptions={jobOptions} hierarchicalUnit={hierarchicalUnit} unitOptions={unitOptions} error={error} loading={loading} rankOptions={rankOptions} update={update} onSatkerChange={id => setForm(current => ({ ...current, id_satker: id, id_unit: '', id_jabatan: '', nama_polsek: '' }))} onUnitChange={id => setForm(current => ({ ...current, id_unit: id, id_jabatan: '', nama_polsek: unitOptions.find(item => String(item.id_unit) === String(id) && String(item.kode_unit || '').toUpperCase() === 'POLSEK') ? current.nama_polsek : '' }))} onPolsekNameChange={update} onClose={onClose} onSubmit={save} /></section></div>;
+  return <div className="drawer-backdrop"><section className="drawer"><div className="drawer-head"><div><span className="eyebrow">{person.id_pegawai ? 'EDIT DATA' : 'DATA BARU'}</span><h2>{person.id_pegawai ? person.nama : 'Tambah personel'}</h2></div><button className="icon-btn" onClick={onClose} disabled={saving}>×</button></div><PersonForm form={form} masters={masters} jobOptions={jobOptions} hierarchicalUnit={hierarchicalUnit} unitOptions={unitOptions} error={error} loading={loading || saving} rankOptions={rankOptions} update={update} onSatkerChange={id => setForm(current => ({ ...current, id_satker: id, id_unit: '', id_jabatan: '', nama_polsek: '' }))} onUnitChange={id => setForm(current => ({ ...current, id_unit: id, id_jabatan: '', nama_polsek: unitOptions.find(item => String(item.id_unit) === String(id) && String(item.kode_unit || '').toUpperCase() === 'POLSEK') ? current.nama_polsek : '' }))} onPolsekNameChange={update} onClose={onClose} onSubmit={save} /></section></div>;
 }
