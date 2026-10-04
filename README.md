@@ -16,7 +16,7 @@ npm install
 npm run dev
 ```
 
-Atur `VITE_API_BASE_URL` sesuai alamat backend. Frontend saat ini menyediakan login, dashboard daftar personel berbasis scope, pencarian, form tambah/edit personel POLRI/ASN, profil dan timeline riwayat jabatan, pemilih pangkat POLRI, serta Administrasi Akses untuk admin pertama. API tetap menjadi sumber keputusan permission; menu frontend hanya membantu pengalaman pengguna.
+Atur `VITE_API_BASE_URL` sesuai alamat backend. Frontend saat ini menyediakan login, dashboard daftar personel berbasis scope, pencarian, form tambah/edit personel POLRI/ASN, profil dan timeline riwayat jabatan, pemilih pangkat POLRI, Profil Saya, Log Aktivitas, serta Administrasi Akses untuk admin pertama. API tetap menjadi sumber keputusan permission; menu frontend hanya membantu pengalaman pengguna.
 
 Build production:
 
@@ -107,8 +107,24 @@ Form tambah/edit riwayat menggunakan mekanisme penempatan yang sama dengan
 - Halaman Permintaan Akses menampilkan registrasi pending dan menyediakan aksi Setujui/Tolak serta penetapan role.
 - Approval registrasi hanya dapat diproses oleh role `admin` pertama; Admin SSDM tetap mengelola scope dan user aktif sesuai kewenangannya.
 - Login, registrasi dengan email dan validasi OTP, lupa/reset password, dan ganti password.
+- Urutan menu utama: **Visualisasi Data**, **Data Personel**, **Profil Saya**, **Scope Organisasi** (admin), lalu **Log Aktivitas**.
+- **Profil Saya** menampilkan informasi akun yang sedang login dan menjadi lokasi tombol **Ganti password**.
+- **Log Aktivitas** menyediakan filter aksi, resource, pencarian, dan rentang tanggal; filter responsif pada web view sempit dan tabel tidak meluap ke halaman utama.
 - Sidebar desktop permanen; sidebar mobile memiliki tombol buka, tombol tutup,
   overlay, dan auto-close setelah menu dipilih.
+
+### Kredensial demo
+
+Untuk pengujian pada lingkungan demo/non-produksi, gunakan akun berikut:
+
+| Role | Username | Password |
+|---|---|---|
+| Admin SSDM | `demo_admin_ssdm` | `Demo-Admin-2026!` |
+| Operator Polda | `demo_operator_polda` | `Demo-Operator-2026!` |
+| Operator Satker | `demo_operator_satker` | `Demo-Operator-2026!` |
+
+Akun dibuat oleh seed backend `db/seed/demo_merit_system.sql` dan tidak boleh
+digunakan pada lingkungan produksi.
 
 ## Endpoint utama yang digunakan
 
@@ -121,6 +137,8 @@ Form tambah/edit riwayat menggunakan mekanisme penempatan yang sama dengan
 - `GET/PATCH /api/v1/auth/registrations/pending` dan `/api/v1/auth/registrations/:id`
 - `GET /api/v1/auth/registrations/history`
 - `GET /api/v1/auth/users/approved`
+- `GET /api/v1/auth/me/profile` — profil akun pengguna yang sedang login.
+- `GET /api/v1/audit-log` — log aktivitas sesuai role dan scope organisasi.
 - master Satker, unit kerja, jabatan, fungsi, level, dan status jabatan
 
 Build production:
