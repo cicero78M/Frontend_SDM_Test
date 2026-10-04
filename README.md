@@ -134,12 +134,19 @@ digunakan pada lingkungan produksi.
 - CRUD `/api/v1/personel/:id/pendidikan`
 - CRUD `/api/v1/personel/:id/diklat`
 - `GET /api/v1/dashboard/overview`
+- `GET /api/v1/merit/indicators` dan `GET /api/v1/merit/periods`
+- `GET /api/v1/personel/:id/merit`
+- `POST/DELETE /api/v1/personel/:id/merit-assessments/:assessmentId`
 - `GET/PATCH /api/v1/auth/registrations/pending` dan `/api/v1/auth/registrations/:id`
 - `GET /api/v1/auth/registrations/history`
 - `GET /api/v1/auth/users/approved`
 - `GET /api/v1/auth/me/profile` — profil akun pengguna yang sedang login.
 - `GET /api/v1/audit-log` — log aktivitas sesuai role dan scope organisasi.
 - master Satker, unit kerja, jabatan, fungsi, level, dan status jabatan
+
+Update personel menolak NRP/NIP atau NIK yang sudah digunakan personel lain dan
+mengembalikan HTTP `409 Conflict`. Setelah berhasil, response update mengikuti
+projection data pada daftar personel agar bentuk data tetap konsisten.
 
 Build production:
 
