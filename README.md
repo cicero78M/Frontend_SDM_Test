@@ -148,6 +148,26 @@ Update personel menolak NRP/NIP atau NIK yang sudah digunakan personel lain dan
 mengembalikan HTTP `409 Conflict`. Setelah berhasil, response update mengikuti
 projection data pada daftar personel agar bentuk data tetap konsisten.
 
+### Penanganan error API
+
+Seluruh request frontend menggunakan client terpusat di `src/api.js`.
+
+- Request dihentikan setelah 20 detik agar UI tidak menunggu tanpa batas; pemanggil
+  dapat mengganti batas dengan opsi `timeoutMs` atau membatalkan request melalui
+  `AbortSignal`.
+- Error jaringan ditampilkan sebagai pesan koneksi yang dapat dipahami operator,
+  sedangkan timeout dan pembatalan memiliki pesan yang berbeda.
+- Respons error JSON memakai field `error` dan `details` dari backend. Detail
+  validasi diringkas menjadi pesan per field.
+- Respons HTTP non-JSON tidak ditampilkan mentah; frontend memberi pesan bahwa
+  server mengembalikan respons tidak valid.
+- HTTP `401` menghapus token lokal dan mengembalikan pengguna ke halaman login.
+- Kegagalan memuat master/filter ditampilkan pada halaman terkait dan tidak lagi
+  diabaikan secara diam-diam.
+
+Kode error terstruktur tersedia melalui `ApiError.status`, `ApiError.code`, dan
+`ApiError.details` jika komponen membutuhkan perilaku khusus.
+
 Build production:
 
 ```bash

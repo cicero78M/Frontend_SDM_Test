@@ -57,28 +57,70 @@ export function hierarchicalUnitOptions(items) {
 }
 
 // Mengubah detail validasi API menjadi pesan yang dapat dipahami operator.
-function apiErrorMessage(body) {
+function apiErrorMessage(body, fallback = 'Request gagal.') {
   const details = Array.isArray(body?.details) ? body.details : [];
-  if (!details.length) return body?.error || 'Request gagal.';
+  if (!details.length) return body?.error || body?.message || fallback;
   const explanation = details
     .map(item => `${item.label || item.field || 'Data'}: ${item.message || 'tidak valid'}`)
     .join(' • ');
   return `${body?.error || 'Validasi gagal.'} ${explanation}`;
 }
 
+export class ApiError extends Error {
+  constructor(message, { status = 0, code = 'API_ERROR', details = [] } = {}) {
+    super(message);
+    this.name = 'ApiError';
+    this.status = status;
+    this.code = code;
+    this.details = details;
+  }
+}
+
 // Menambahkan token login dan meneruskan error API ke komponen pemanggil.
 export async function request(path, options = {}) {
   const token = localStorage.getItem('sdm_token');
-  const response = await fetch(`${API}${path}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...(options.headers || {})
+  const { timeoutMs = 20000, signal, ...fetchOptions } = options;
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+  const abortFromCaller = () => controller.abort();
+  signal?.addEventListener('abort', abortFromCaller, { once: true });
+
+  try {
+    const response = await fetch(`${API}${path}`, {
+      ...fetchOptions,
+      signal: controller.signal,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(fetchOptions.headers || {})
+      }
+    });
+    const rawBody = response.status === 204 ? '' : await response.text();
+    let body = null;
+    if (rawBody) {
+      try {
+        body = JSON.parse(rawBody);
+      } catch {
+        body = { message: 'Server mengembalikan respons yang tidak valid.' };
+      }
     }
-  });
-  const body = response.status === 204 ? null : await response.json().catch(() => ({}));
-  if (response.status === 401 && token) window.dispatchEvent(new Event('sdm:unauthorized'));
-  if (!response.ok) throw new Error(apiErrorMessage(body));
-  return body;
+    if (response.status === 401 && token) window.dispatchEvent(new Event('sdm:unauthorized'));
+    if (!response.ok) {
+      throw new ApiError(apiErrorMessage(body, `Request gagal (${response.status}).`), {
+        status: response.status,
+        code: body?.code || `HTTP_${response.status}`,
+        details: body?.details
+      });
+    }
+    return body;
+  } catch (error) {
+    if (error instanceof ApiError) throw error;
+    if (error.name === 'AbortError') {
+      throw new ApiError(signal?.aborted ? 'Request dibatalkan.' : 'Request terlalu lama dan dihentikan.', { code: signal?.aborted ? 'ABORTED' : 'TIMEOUT' });
+    }
+    throw new ApiError('Tidak dapat terhubung ke server. Periksa koneksi lalu coba lagi.', { code: 'NETWORK_ERROR' });
+  } finally {
+    window.clearTimeout(timeout);
+    signal?.removeEventListener('abort', abortFromCaller);
+  }
 }
