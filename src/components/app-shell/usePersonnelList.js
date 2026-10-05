@@ -14,6 +14,7 @@ export const initialPersonnelFilters = {
 export function usePersonnelList(user, page) {
   const [people, setPeople] = useState([]);
   const [statusOptions, setStatusOptions] = useState([]);
+  const [statusError, setStatusError] = useState('');
   const [listError, setListError] = useState('');
   const [meta, setMeta] = useState({ page: 1, limit: 10, total: 0 });
   const [search, setSearch] = useState('');
@@ -43,12 +44,19 @@ export function usePersonnelList(user, page) {
   }
 
   useEffect(() => {
-    if (user) request('/master/status-personel').then(result => setStatusOptions((result.data || []).map(item => item.status))).catch(() => {});
+    if (!user) return;
+    setStatusError('');
+    request('/master/status-personel')
+      .then(result => setStatusOptions((result.data || []).map(item => item.status)))
+      .catch(error => {
+        setStatusOptions([]);
+        setStatusError(error.message || 'Filter status personel tidak dapat dimuat.');
+      });
   }, [user]);
 
   useEffect(() => {
     if (user && page === 'people') load(1, meta.limit || 10, filters);
   }, [user, search, page, JSON.stringify(filters)]);
 
-  return { people, meta, search, setSearch, load, filters, updateFilter, resetFilters, statusOptions, listError };
+  return { people, meta, search, setSearch, load, filters, updateFilter, resetFilters, statusOptions, listError, statusError };
 }

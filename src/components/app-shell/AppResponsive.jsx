@@ -18,7 +18,7 @@ export function AppResponsive() {
   const [editor, setEditor] = useState(null);
   const [passwordPanel, setPasswordPanel] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { people, meta, search, setSearch, load, filters, updateFilter, resetFilters, statusOptions, listError } = usePersonnelList(user, page);
+  const { people, meta, search, setSearch, load, filters, updateFilter, resetFilters, statusOptions, listError, statusError } = usePersonnelList(user, page);
   const canEdit = user && ['admin', 'admin_ssdm', 'editor', 'operator_polda', 'operator_satker', 'operator_polres'].includes(user.role);
 
   // Pulihkan sesi dari token yang tersimpan agar refresh browser/reload frontend
@@ -59,7 +59,7 @@ export function AppResponsive() {
   return <div className={`shell ${sidebarOpen ? 'sidebar-open' : ''}`}>
     <AppSidebar user={user} page={page} sidebarOpen={sidebarOpen} onNavigate={go} onLogout={logout} onOpen={() => setSidebarOpen(true)} onClose={() => setSidebarOpen(false)} />
     <main className="content">
-      {page === 'dashboard' ? <PersonnelDashboardPage user={user} /> : page === 'audit' ? <AuditLogPage /> : page === 'profile' ? <UserProfilePage user={user} onPassword={openPasswordPanel} /> : adminPage ? <ScopeManagementPage /> : <PersonnelPage user={user} canEdit={canEdit} people={people} meta={meta} search={search} onSearch={setSearch} onLoad={load} filters={filters} statusOptions={statusOptions} listError={listError} onFilterChange={updateFilter} onResetFilters={resetFilters} onProfile={setProfile} onEdit={setEditor} />}
+      {page === 'dashboard' ? <PersonnelDashboardPage user={user} /> : page === 'audit' ? <AuditLogPage /> : page === 'profile' ? <UserProfilePage user={user} onPassword={openPasswordPanel} /> : adminPage ? <ScopeManagementPage /> : <PersonnelPage user={user} canEdit={canEdit} people={people} meta={meta} search={search} onSearch={setSearch} onLoad={load} filters={filters} statusOptions={statusOptions} listError={listError} statusError={statusError} onFilterChange={updateFilter} onResetFilters={resetFilters} onProfile={setProfile} onEdit={setEditor} />}
       {passwordPanel && <PasswordPanel onClose={() => setPasswordPanel(false)} />}
       {profile && <CareerProfilePanel person={profile} userRole={user?.role} canEdit={canEdit} onClose={() => setProfile(null)} />}
       {editor && <PersonPanel person={editor} onClose={() => setEditor(null)} onSaved={() => { setEditor(null); load(meta.page); }} />}
