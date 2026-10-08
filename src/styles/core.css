@@ -292,6 +292,42 @@ td small {
   gap: 17px;
   margin-top: 30px;
 }
+.rag-link {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 24px;
+  padding: 12px 13px;
+  border: 1px solid #dce7ec;
+  border-radius: 9px;
+  color: #173d54;
+  background: #f7fafb;
+  text-decoration: none;
+  transition: border-color .2s, background .2s, transform .2s;
+}
+.rag-link:hover {
+  border-color: #b88930;
+  background: #fffdf7;
+  transform: translateY(-1px);
+}
+.rag-link-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #173d54;
+  color: #d8a84e;
+  font-size: 15px;
+}
+.rag-link strong,
+.rag-link small {
+  display: block;
+}
+.rag-link strong { font-size: 12px; }
+.rag-link small { margin-top: 3px; color: #74808a; font-size: 10px; line-height: 1.35; }
+.rag-link-arrow { margin-left: auto; color: #b88930; font-size: 19px; }
 .registration-form .satker-picker {
   display: contents;
 }
