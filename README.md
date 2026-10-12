@@ -126,6 +126,25 @@ Untuk pengujian pada lingkungan demo/non-produksi, gunakan akun berikut:
 Akun dibuat oleh seed backend `db/seed/demo_merit_system.sql` dan tidak boleh
 digunakan pada lingkungan produksi.
 
+### Asisten RAG SDM
+
+Frontend menyediakan halaman **Asisten Knowledge Base** untuk pertanyaan tentang
+SBP dan Perpol. Halaman ini dapat dibuka dari menu setelah login atau melalui
+tombol **Chat Bantuan SDM** pada halaman login tanpa login. Percakapan tampil
+sebagai chat history selama sesi browser, dengan textbox, tombol kirim,
+pertanyaan contoh, indikator loading/error, dan tombol bersihkan.
+
+Frontend memanggil backend RAG melalui reverse-proxy path `/rag/api`:
+
+- `GET /rag/api/health` — status readiness knowledge base.
+- `GET /rag/api/stats` — jumlah dokumen/chunk dan mode retrieval.
+- `POST /rag/api/chat` — body `{ "question": "...", "topK": 5 }`; jawaban ditampilkan bersama citation sumber.
+
+Backend RAG dan spesifikasi OpenAPI berada di repository
+[`Backend_SDM_RAG`](https://github.com/cicero78M/Backend_SDM_RAG), khususnya
+[`docs/openapi.yaml`](https://github.com/cicero78M/Backend_SDM_RAG/blob/main/docs/openapi.yaml).
+Reverse proxy harus meneruskan `/rag/api/` ke service RAG pada port `3001`.
+
 ## Endpoint utama yang digunakan
 
 - `GET /api/v1/personel`
