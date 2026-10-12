@@ -9,10 +9,12 @@ import { AppSidebar } from './AppSidebar';
 import { PersonnelPage } from './PersonnelPage';
 import { usePersonnelList } from './usePersonnelList';
 import { UserProfilePage } from '../profile';
+import { RagAssistantPage } from '../rag';
 
 export function AppResponsive() {
   const [user, setUser] = useState(null);
   const [authReady, setAuthReady] = useState(false);
+  const [guestRag, setGuestRag] = useState(false);
   const [page, setPage] = useState('dashboard');
   const [profile, setProfile] = useState(null);
   const [editor, setEditor] = useState(null);
@@ -50,7 +52,8 @@ export function AppResponsive() {
   }, []);
 
   if (!authReady) return <main className="content"><p className="muted">Memulihkan sesi…</p></main>;
-  if (!user) return <Login onLogin={setUser} />;
+  if (!user && guestRag) return <main className="content guest-rag-content"><button className="back-link" type="button" onClick={() => setGuestRag(false)}>← Kembali ke login</button><RagAssistantPage /></main>;
+  if (!user) return <Login onLogin={setUser} onChat={() => setGuestRag(true)} />;
 
   function logout() { localStorage.removeItem('sdm_token'); setUser(null); setSidebarOpen(false); }
   function go(next) { setPage(next); setSidebarOpen(false); }
@@ -59,7 +62,7 @@ export function AppResponsive() {
   return <div className={`shell ${sidebarOpen ? 'sidebar-open' : ''}`}>
     <AppSidebar user={user} page={page} sidebarOpen={sidebarOpen} onNavigate={go} onLogout={logout} onOpen={() => setSidebarOpen(true)} onClose={() => setSidebarOpen(false)} />
     <main className="content">
-      {page === 'dashboard' ? <PersonnelDashboardPage user={user} /> : page === 'audit' ? <AuditLogPage /> : page === 'profile' ? <UserProfilePage user={user} onPassword={openPasswordPanel} /> : adminPage ? <ScopeManagementPage /> : <PersonnelPage user={user} canEdit={canEdit} people={people} meta={meta} search={search} onSearch={setSearch} onLoad={load} filters={filters} statusOptions={statusOptions} listError={listError} statusError={statusError} onFilterChange={updateFilter} onResetFilters={resetFilters} onProfile={setProfile} onEdit={setEditor} />}
+      {page === 'dashboard' ? <PersonnelDashboardPage user={user} /> : page === 'rag' ? <RagAssistantPage /> : page === 'audit' ? <AuditLogPage /> : page === 'profile' ? <UserProfilePage user={user} onPassword={openPasswordPanel} /> : adminPage ? <ScopeManagementPage /> : <PersonnelPage user={user} canEdit={canEdit} people={people} meta={meta} search={search} onSearch={setSearch} onLoad={load} filters={filters} statusOptions={statusOptions} listError={listError} statusError={statusError} onFilterChange={updateFilter} onResetFilters={resetFilters} onProfile={setProfile} onEdit={setEditor} />}
       {passwordPanel && <PasswordPanel onClose={() => setPasswordPanel(false)} />}
       {profile && <CareerProfilePanel person={profile} userRole={user?.role} canEdit={canEdit} onClose={() => setProfile(null)} />}
       {editor && <PersonPanel person={editor} onClose={() => setEditor(null)} onSaved={() => { setEditor(null); load(meta.page); }} />}
