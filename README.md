@@ -144,6 +144,7 @@ Backend RAG dan spesifikasi OpenAPI berada di repository
 [`Backend_SDM_RAG`](https://github.com/cicero78M/Backend_SDM_RAG), khususnya
 [`docs/openapi.yaml`](https://github.com/cicero78M/Backend_SDM_RAG/blob/main/docs/openapi.yaml).
 Reverse proxy harus meneruskan `/rag/api/` ke service RAG pada port `3001`.
+Contoh blok Nginx tersedia di [`docs/nginx-rag-location.conf`](docs/nginx-rag-location.conf).
 
 ## Endpoint utama yang digunakan
 
